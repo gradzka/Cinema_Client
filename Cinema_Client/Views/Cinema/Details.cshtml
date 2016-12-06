@@ -1,0 +1,106 @@
+﻿@model Cinema_Client.Models.MOVIES
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MOVIES</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TITLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TITLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GENRE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GENRE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RUNTIME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RUNTIME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RATING)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RATING)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RELEASE_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RELEASE_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DIRECTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DIRECTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SCREENPLAY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SCREENPLAY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STARRING)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STARRING)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IMAGE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IMAGE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TRAILER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TRAILER)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SYNOPSIS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SYNOPSIS)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_MOVIE }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Cinema_Client.Models.MOVIES>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TITLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GENRE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RUNTIME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RATING)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RELEASE_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DIRECTION)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TITLE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GENRE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RUNTIME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RATING)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RELEASE_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DIRECTION)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_MOVIE }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_MOVIE }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_MOVIE })
+        </td>
+    </tr>
+}
+
+</table>

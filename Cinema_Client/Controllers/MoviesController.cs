@@ -10,17 +10,17 @@ using Cinema_Client.Models;
 
 namespace Cinema_Client.Controllers
 {
-    public class CinemaController : Controller
+    public class MoviesController : Controller
     {
         private CinemaEntities db = new CinemaEntities();
 
-        // GET: Cinema
+        // GET: Movies
         public ActionResult Index()
         {
             return View(db.MOVIES.ToList());
         }
 
-        // GET: Cinema/Details/5
+        // GET: Movies/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -35,13 +35,13 @@ namespace Cinema_Client.Controllers
             return View(mOVIES);
         }
 
-        // GET: Cinema/Create
+        // GET: Movies/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Cinema/Create
+        // POST: Movies/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -58,7 +58,7 @@ namespace Cinema_Client.Controllers
             return View(mOVIES);
         }
 
-        // GET: Cinema/Edit/5
+        // GET: Movies/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -73,7 +73,7 @@ namespace Cinema_Client.Controllers
             return View(mOVIES);
         }
 
-        // POST: Cinema/Edit/5
+        // POST: Movies/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -89,7 +89,7 @@ namespace Cinema_Client.Controllers
             return View(mOVIES);
         }
 
-        // GET: Cinema/Delete/5
+        // GET: Movies/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -104,7 +104,7 @@ namespace Cinema_Client.Controllers
             return View(mOVIES);
         }
 
-        // POST: Cinema/Delete/5
+        // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)

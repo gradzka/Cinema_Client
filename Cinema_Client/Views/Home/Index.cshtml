@@ -1,13 +1,37 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    ViewBag.middleMovie = 0;
 }
 
 <table style="width:100%">
     <tr>
-        <td style="width:30%" align="right"> </td>
-        <td style="width:40%" align="center">
-            <myTitle><br />TERAZ GRANE</myTitle>
+        <td style="width:30%" align="right">
+
         </td>
-        <td style="width:30%" align="left"> </td>
+        <td style="width:40%" align="center">
+            <myTitle><br/>TERAZ GRAMY</myTitle>
+        </td>
+        <td style="width:30%" align="left">
+
+        </td>
+    </tr>
+    <tr>
+        <td style="width:30%" align="right">
+            @if (ViewBag.middleMovie - 1 < 0)
+            { <img src="@ViewBag.movie[ViewBag.movieNo - 1].IMAGE" class="transparent" alt="" style="width:auto; height:300px;">}
+            else
+            { <img src="@ViewBag.movie[ViewBag.middleMovie - 1].IMAGE" class="transparent" alt="" style="width:auto; height:300px;">}
+        </td>
+        <td style="width:40%" align="center">
+            <a href="@Url.Action("Details", "Movies", new { id = ViewBag.movie[0].ID_MOVIE })">
+                <img src="@ViewBag.movie[ViewBag.middleMovie].IMAGE" alt="" style="width:auto; height:500px;">
+            </a>
+        </td>
+        <td style="width:30%" align="left">
+            @if (ViewBag.middleMovie > ViewBag.movieNo)
+            { <img src="@ViewBag.movie[0].IMAGE" class="transparent" alt="" style="width:auto; height:300px;">}
+            else
+            { <img src="@ViewBag.movie[ViewBag.middleMovie+1].IMAGE" class="transparent" alt="" style="width:auto; height:300px;">}           
+        </td>
     </tr>    
 </table>

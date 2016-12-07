@@ -1,0 +1,70 @@
+﻿@model Cinema_Client.Models.MOVIES
+
+@{
+    ViewBag.Title = @Html.DisplayFor(model => model.TITLE);
+}
+
+<h2>Szczegóły</h2>
+
+<div>
+
+    <h4>@Html.DisplayFor(model => model.TITLE)</h4>
+    <hr />
+    <table style="width:100%">
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>TYTUŁ</td>
+            <td>@Html.DisplayFor(model => model.TITLE)</td>
+            <td rowspan="9">
+                <img src=@Model.IMAGE alt="" style="width:auto; height:400px;">
+            </td>
+            <td rowspan="9">
+                <video width="320" height="240" controls>
+                    <source src=@Model.TRAILER type="video/mp4">
+                </video> 
+            </td>
+
+
+        </tr>
+        <tr>
+            <td>GATUNEK</td>
+            <td>@Html.DisplayFor(model => model.GENRE)</td>
+        </tr>
+        <tr>
+            <td>CZAS TRWANIA</td>
+            <td>@Html.DisplayFor(model => model.RUNTIME)</td>
+        </tr>
+        <tr>
+            <td>WIEK</td>
+            <td>@Html.DisplayFor(model => model.RATING)</td>
+        </tr>
+        <tr>
+            <td>PREMIERA</td>
+            <td>@Html.DisplayFor(model => model.RELEASE_DATE)</td>
+        </tr>
+        <tr>
+            <td>REŻYSERIA</td>
+            <td>@Html.DisplayFor(model => model.DIRECTION)</td>
+        </tr>
+        <tr>
+            <td>SCENARIUSZ</td>
+            <td>@Html.DisplayFor(model => model.SCREENPLAY)</td>
+        </tr>
+        <tr>
+            <td>OBSADA</td>
+            <td>@Html.DisplayFor(model => model.STARRING)</td>
+        </tr>
+        <tr>
+            <td>OPIS</td>
+            <td>@Html.DisplayFor(model => model.SYNOPSIS)</td>
+        </tr>
+    </table>
+</div>
+<p>
+        @Html.ActionLink("Back to List", "Index")
+</p>

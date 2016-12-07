@@ -1,33 +1,39 @@
 ﻿@model IEnumerable<Cinema_Client.Models.MOVIES>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Filmy";
 }
 
-<h2>Index</h2>
+<h2>Filmy</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.TITLE)
+            TYTUŁ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GENRE)
+            GATUNEK
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RUNTIME)
+            CZAS TRWANIA
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RATING)
+            WIEK
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RELEASE_DATE)
+            PREMIERA
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DIRECTION)
+            REŻYSERIA
+        </th>
+        <th>
+            SCENARIUSZ
+        </th>
+        <th>
+            OBSADA
+        </th>
+        <th>
+            OPIS
         </th>
         <th></th>
     </tr>
@@ -53,9 +59,16 @@
             @Html.DisplayFor(modelItem => item.DIRECTION)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID_MOVIE }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID_MOVIE }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID_MOVIE })
+            @Html.DisplayFor(modelItem => item.SCREENPLAY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STARRING)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SYNOPSIS)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.ID_MOVIE })
         </td>
     </tr>
 }

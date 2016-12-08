@@ -4,67 +4,73 @@
     ViewBag.Title = @Html.DisplayFor(model => model.TITLE);
 }
 
-<h2>Szczegóły</h2>
+<br><myTitle>Szczegóły </myTitle>
 
-<div>
+    <div>
+        <h4>@Html.DisplayFor(model => model.TITLE)</h4>
+        <hr />
+        <table>
+            <tr>
 
-    <h4>@Html.DisplayFor(model => model.TITLE)</h4>
-    <hr />
-    <table style="width:100%">
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td>TYTUŁ</td>
-            <td>@Html.DisplayFor(model => model.TITLE)</td>
-            <td rowspan="9">
-                <img src=@Model.IMAGE alt="" style="width:auto; height:400px;">
-            </td>
-            <td rowspan="9">
-                <video width="320" height="240" controls>
-                    <source src=@Model.TRAILER type="video/mp4">
-                </video> 
-            </td>
-
-
-        </tr>
-        <tr>
-            <td>GATUNEK</td>
-            <td>@Html.DisplayFor(model => model.GENRE)</td>
-        </tr>
-        <tr>
-            <td>CZAS TRWANIA</td>
-            <td>@Html.DisplayFor(model => model.RUNTIME)</td>
-        </tr>
-        <tr>
-            <td>WIEK</td>
-            <td>@Html.DisplayFor(model => model.RATING)</td>
-        </tr>
-        <tr>
-            <td>PREMIERA</td>
-            <td>@Html.DisplayFor(model => model.RELEASE_DATE)</td>
-        </tr>
-        <tr>
-            <td>REŻYSERIA</td>
-            <td>@Html.DisplayFor(model => model.DIRECTION)</td>
-        </tr>
-        <tr>
-            <td>SCENARIUSZ</td>
-            <td>@Html.DisplayFor(model => model.SCREENPLAY)</td>
-        </tr>
-        <tr>
-            <td>OBSADA</td>
-            <td>@Html.DisplayFor(model => model.STARRING)</td>
-        </tr>
-        <tr>
-            <td>OPIS</td>
-            <td>@Html.DisplayFor(model => model.SYNOPSIS)</td>
-        </tr>
-    </table>
-</div>
-<p>
-        @Html.ActionLink("Back to List", "Index")
-</p>
+                <td rowspan="9" valign="middle">
+                @if (@Model.IMAGE != "")
+                {
+                    <img src=@Model.IMAGE alt="" style="width:auto; height:450px;">
+                }
+                else
+                {
+                    <h4>Brak plakatu...</h4>
+                }
+                </td>
+                <td align="right" style="color: #cfcfcf"><b>TYTUŁ&ensp;&ensp;</td>
+                <td> @Html.DisplayFor(model => model.TITLE)</td>
+                <td rowspan="8" valign="middle" align="right">
+                @if (@Model.TRAILER != "")
+                {
+                    <video width="480" height="360" controls>
+                        <source src=@Model.TRAILER type="video/mp4">
+                    </video>
+                }
+                else
+                {
+                    <h4>Brak trailera...</h4>
+                }
+                </td>
+            </tr>
+            <tr>
+                <td align="right" style="color: #cfcfcf"><b>GATUNEK&ensp;&ensp;</td>
+                <td>@Html.DisplayFor(model => model.GENRE)</td>
+            </tr>
+            <tr>
+                <td align="right" style="color: #cfcfcf"><b>&nbsp;CZAS&nbsp;TRWANIA&ensp;&ensp;</td>
+                <td>@Html.DisplayFor(model => model.RUNTIME)</td>
+            </tr>
+            <tr>
+                <td align="right" style="color: #cfcfcf"><b>WIEK&ensp;&ensp;</td>
+                <td>@Html.DisplayFor(model => model.RATING)</td>
+            </tr>
+            <tr>
+                <td align="right" style="color: #cfcfcf"><b>PREMIERA&ensp;&ensp;</td>
+                <td>@Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.RELEASE_DATE))</td>
+            </tr>
+            <tr>
+                <td align="right" style="color: #cfcfcf"><b>REŻYSERIA&ensp;&ensp;</td>
+                <td>@Html.DisplayFor(model => model.DIRECTION)</td>
+            </tr>
+            <tr>
+                <td align="right" style="color: #cfcfcf"><b>SCENARIUSZ&ensp;&ensp;</td>
+                <td>@Html.DisplayFor(model => model.SCREENPLAY)</td>
+            </tr>
+            <tr>
+                <td align="right" style="color: #cfcfcf"><b>OBSADA&ensp;&ensp;</td>
+                <td>@Html.DisplayFor(model => model.STARRING)</td>
+            </tr>
+            <tr>
+                <td align="right" style="color: #cfcfcf"><b>OPIS&ensp;&ensp;</td>
+                <td colspan="2">@Html.DisplayFor(model => model.SYNOPSIS)</td>
+            </tr>
+        </table>
+    </div>
+    <p>
+        <br> @Html.ActionLink("Powrót do listy filmów", "Index")
+    </p>

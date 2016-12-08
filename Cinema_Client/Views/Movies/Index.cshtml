@@ -4,73 +4,53 @@
     ViewBag.Title = "Filmy";
 }
 
-<h2>Filmy</h2>
+<br><myTitle>Filmy</myTitle>
 
-<table class="table">
-    <tr>
-        <th>
-            TYTUŁ
-        </th>
-        <th>
-            GATUNEK
-        </th>
-        <th>
-            CZAS TRWANIA
-        </th>
-        <th>
-            WIEK
-        </th>
-        <th>
-            PREMIERA
-        </th>
-        <th>
-            REŻYSERIA
-        </th>
-        <th>
-            SCENARIUSZ
-        </th>
-        <th>
-            OBSADA
-        </th>
-        <th>
-            OPIS
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TITLE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GENRE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RUNTIME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RATING)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RELEASE_DATE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DIRECTION)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SCREENPLAY)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.STARRING)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SYNOPSIS)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ID_MOVIE })
-        </td>
-    </tr>
-}
-
-</table>
+    <table class="table">
+        <tr>
+            <th>
+                TYTUŁ
+            </th>
+            <th>
+                GATUNEK
+            </th>
+            <th>
+                CZAS TRWANIA
+            </th>
+            <th>
+                WIEK
+            </th>
+            <th>
+                PREMIERA
+            </th>
+            <th>
+                REŻYSERIA
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TITLE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GENRE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RUNTIME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RATING)
+                </td>
+                <td>
+                    @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.RELEASE_DATE))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DIRECTION)
+                </td>
+                <td>
+                    @Html.ActionLink("Więcej...", "Details", new { id = item.ID_MOVIE })
+                </td>
+            </tr>
+        }
+    </table>

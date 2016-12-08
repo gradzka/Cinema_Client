@@ -291,6 +291,7 @@ table {
   }
   .table td,
   .table th {
+
     background-color: #fff !important;
   }
   .btn > .caret,
@@ -492,14 +493,14 @@ h6,
 
 myTitle,
 .myTitle{
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 40px;
   font-size: 30px;
   font-family: "Helvetica Neue",'Gill Sans MT',sans-serif;
   font: 800;
   font-weight: 600;
   line-height: 1.1;
-  color: #e7f2fb;
+  color: #ff5555
 }
 
 h1 small,

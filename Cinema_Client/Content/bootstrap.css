@@ -500,6 +500,8 @@ myTitle,
   font: 800;
   font-weight: 600;
   line-height: 1.1;
+  orphans: 3;
+  widows: 3;
   color: #ff5555
 }
 

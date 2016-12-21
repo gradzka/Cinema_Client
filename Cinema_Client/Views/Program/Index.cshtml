@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Cinema_Client.Models.PROGRAM>
+
+@{
+    ViewBag.Title = "Program";
+}
+
+<h2><myTitle>Program</myTitle></h2>
+
+<table class="table" style="width: 70%">
+    <tr>
+       
+        <th>
+           DATA
+        </th>
+        <th>
+            GODZINA
+        </th>
+        <th>
+            TYTUŁ
+        </th>
+        <th>
+            NR SALI
+        </th>
+        <th>
+            2D/3D
+        </th>
+        <th>
+            WERSJA JĘZYKOWA
+        </th>    
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DATE))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TIME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MOVIES.TITLE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HALLS.ID_HALL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C2D_3D)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VERSION)
+        </td>
+    </tr>
+}
+
+</table>

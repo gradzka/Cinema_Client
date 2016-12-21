@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Cinema_Client.Models.TICKETS>
+﻿@model IEnumerable<Cinema_Client.TICKETS>
 
 @{
     ViewBag.Title = "Cennik";
@@ -19,18 +19,19 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TYPE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PRICE_2D)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PRICE_3D)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TYPE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PRICE_2D)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PRICE_3D)
+            </td>
+        </tr>
+    }
 
 </table>

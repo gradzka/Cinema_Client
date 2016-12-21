@@ -1,4 +1,4 @@
-﻿using Cinema_Client.Models;
+﻿using Cinema_Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +9,11 @@ namespace Cinema_Client.Controllers
 {
     public class HomeController : Controller
     {
-
         private CinemaEntities db = new CinemaEntities();
         public ActionResult Index()
         {
-            var mOVIES = db.MOVIES.OrderBy(x => x.ID_MOVIE).Where(x=> x.IMAGE != "").ToList();
-            //mOVIES.Count;
-            //mOVIES.ElementAt
+            var mOVIES = db.MOVIES.OrderBy(x => x.ID_MOVIE).Where(x => x.IMAGE != "").ToList();
+
             if (mOVIES == null)
             {
                 return HttpNotFound();
@@ -23,7 +21,7 @@ namespace Cinema_Client.Controllers
 
             ViewBag.movie = mOVIES;
             ViewBag.movieNo = mOVIES.Count;
-            
+
             return View();
         }
 

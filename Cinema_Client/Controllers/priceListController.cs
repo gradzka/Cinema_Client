@@ -6,11 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Cinema_Client.Models;
+using Cinema_Client;
 
 namespace Cinema_Client.Controllers
 {
-    public class priceListController : Controller
+    public class PriceListController : Controller
     {
         private CinemaEntities db = new CinemaEntities();
 

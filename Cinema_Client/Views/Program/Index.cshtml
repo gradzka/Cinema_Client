@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Cinema_Client.Models.PROGRAM>
+﻿@model IEnumerable<Cinema_Client.PROGRAM>
 
 @{
     ViewBag.Title = "Program";
@@ -8,9 +8,9 @@
 
 <table class="table" style="width: 70%">
     <tr>
-       
+
         <th>
-           DATA
+            DATA
         </th>
         <th>
             GODZINA
@@ -26,31 +26,32 @@
         </th>
         <th>
             WERSJA JĘZYKOWA
-        </th>    
-        
+        </th>
+
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DATE))
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TIME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MOVIES.TITLE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HALLS.ID_HALL)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.C2D_3D)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VERSION)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DATE))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TIME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MOVIES.TITLE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HALLS.ID_HALL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.C2D_3D)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VERSION)
+            </td>
+        </tr>
+    }
 
 </table>

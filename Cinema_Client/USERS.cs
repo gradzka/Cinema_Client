@@ -28,8 +28,6 @@ namespace Cinema_Client
         [DataType(DataType.Password)]
         public string PASSWORD { get; set; }
 
-
-
         [Required(ErrorMessage = "To pole jest wymagane!")]
         public string NAME { get; set; }
 
@@ -41,6 +39,7 @@ namespace Cinema_Client
         public string E_MAIL { get; set; }
 
         [Required(ErrorMessage = "To pole jest wymagane!")]
+        [RegularExpression(@"^[0-9]{9}", ErrorMessage = "Podaj poprawny numer telefonu!")]
         public string TELEPHONE { get; set; }
 
         public Nullable<System.DateTime> LAST_LOGIN { get; set; }

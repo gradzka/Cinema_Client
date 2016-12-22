@@ -1,10 +1,10 @@
 ﻿@model Cinema_Client.USERS
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Załóż konto";
 }
 
-<h2>Register</h2>
+<h2><myTitle>Register</myTitle></h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>USERS</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @if (ViewBag.Message != null)
@@ -22,7 +21,7 @@
             </div>
         }
         <div class="form-group">
-            @Html.LabelFor(model => model.USER_LOGIN, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.USER_LOGIN,"LOGIN", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.USER_LOGIN, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.USER_LOGIN, "", new { @class = "text-danger" })
@@ -30,7 +29,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PASSWORD, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PASSWORD,"HASŁO", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PASSWORD, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PASSWORD, "", new { @class = "text-danger" })
@@ -40,7 +39,7 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.NAME, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.NAME,"IMIĘ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
@@ -48,7 +47,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SURNAME, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SURNAME,"NAZWISKO", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.SURNAME, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SURNAME, "", new { @class = "text-danger" })
@@ -56,7 +55,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.E_MAIL, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.E_MAIL,"E-MAIL", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.E_MAIL, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.E_MAIL, "", new { @class = "text-danger" })
@@ -65,7 +64,7 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TELEPHONE, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TELEPHONE,"TELEFON", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.TELEPHONE, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TELEPHONE, "", new { @class = "text-danger" })
@@ -74,15 +73,11 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Utwórz" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Wstecz", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

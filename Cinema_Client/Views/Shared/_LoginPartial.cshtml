@@ -1,4 +1,4 @@
-﻿@if (Request.IsAuthenticated)
+﻿@if (Session["USER_LOGIN"] != null)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
@@ -9,9 +9,9 @@
                 @Html.ActionLink("Zarządzaj rezerwacjami", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>
             <li>
-                @Html.ActionLink("Witaj!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink("Witaj, "+ @Session["NAME"].ToString() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>
         </ul>
     }
 }

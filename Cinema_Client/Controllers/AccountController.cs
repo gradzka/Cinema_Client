@@ -113,5 +113,17 @@ namespace Cinema_Client.Controllers
                 return RedirectToAction("Login");
             }
         }
+
+        //
+        // POST: /Account/LogOff
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            Session["USER_LOGIN"] = null;
+            Session["NAME"] = null;
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

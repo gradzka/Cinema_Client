@@ -1,0 +1,40 @@
+﻿@model Cinema_Client.RESERVATIONS
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>RESERVATIONS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PROGRAM.ID_HALL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PROGRAM.ID_HALL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.USERS.PASSWORD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USERS.PASSWORD)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

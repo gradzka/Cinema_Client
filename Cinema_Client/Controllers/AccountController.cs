@@ -66,7 +66,14 @@ namespace Cinema_Client.Controllers
         //Login
         public ActionResult Login()
         {
-            return View();
+            if (Session["USER_LOGIN"] == null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("", "Home");
+            }
         }
 
         [HttpPost]
@@ -93,7 +100,7 @@ namespace Cinema_Client.Controllers
                 {
                     Session["USER_LOGIN"] = usr.USER_LOGIN.ToString();
                     Session["NAME"] = usr.NAME.ToString();
-                    return RedirectToAction("LoggedIn");
+                    return RedirectToAction("", "Home");
                 }
                 else
                 {

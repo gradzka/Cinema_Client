@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Cinema_Client.RESERVATIONS>
+
+@{
+    ViewBag.Title = "Twoje Rezerwacje";
+}
+
+<h2><myTitle>Twoje Rezerwacje</myTitle></h2>
+
+<table class="table" style="width: 70%">
+    <tr>
+        <th>
+            TYTUŁ FILMU
+        </th>
+        <th>
+            DATA
+        </th>
+        <th>
+            GODZINA
+        </th>
+        <th>
+            SALA
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PROGRAM.MOVIES.TITLE)
+        </td>
+        <td>
+            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.PROGRAM.DATE))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PROGRAM.TIME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PROGRAM.ID_HALL)
+        </td>
+        <td>
+            @Html.ActionLink("Szczegóły", "Details", new { id=item.ID_RESERVATION }) |
+            @Html.ActionLink("Anuluj", "Delete", new { id=item.ID_RESERVATION })
+        </td>
+    </tr>
+}
+
+</table>

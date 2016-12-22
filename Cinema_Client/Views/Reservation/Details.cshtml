@@ -1,0 +1,71 @@
+﻿@model Cinema_Client.RESERVATIONS
+
+@{
+    ViewBag.Title = "Szczegóły Rezerwacji";
+}
+
+<h2><myTitle>Szczegóły Rezerwacji</myTitle></h2>
+
+<div>
+    <hr />
+    <table style="width: 70%">
+        <tr>
+            <td align="right" style="color: #cfcfcf"><b>TYTUŁ &ensp;&ensp;</td>
+            <td> @Html.DisplayFor(model => model.PROGRAM.MOVIES.TITLE)</td>
+
+            <td rowspan="5" valign="middle" align="right">
+                <table class="table" align="center" style="width: 70%">
+                    <tr>
+                        <th>
+                            RZĄD
+                        </th>
+                        <th>
+                            MIEJSCE
+                        </th>
+                        <th>
+                            BILET
+                        </th>
+                    </tr>
+
+                    @foreach (var item in ViewBag.RDetails)
+                    {
+                        <tr>
+                            <td>
+                                @item.row
+                            </td>
+                            <td>
+                                @item.seat_no
+                            </td>
+                            <td>
+                                @item.ticket.TYPE
+                            </td>
+                        </tr>
+                    }
+                    </table>
+</td>
+        </tr>
+        <tr>
+            <td align="right" style="color: #cfcfcf"><b>DATA &ensp;&ensp;</td>
+            <td>@Convert.ToString(string.Format("{0:dd/MM/yyyy}",Model.PROGRAM.DATE))</td>
+        </tr>
+        <tr>
+            <td align="right" style="color: #cfcfcf"><b>GODZINA &ensp;&ensp;</td>
+            <td>@Html.DisplayFor(model => model.PROGRAM.TIME)</td>
+        </tr>
+
+        <tr>
+            <td align="right" style="color: #cfcfcf"><b>&nbsp;CZAS&nbsp;TRWANIA &ensp;&ensp;</td>
+            <td>@Html.DisplayFor(model => model.PROGRAM.MOVIES.RUNTIME)</td>
+        </tr>
+        <tr>
+            <td align="right" style="color: #cfcfcf"><b>SALA &ensp;&ensp;</td>
+            <td>@Html.DisplayFor(model => model.PROGRAM.ID_HALL)</td>
+        </tr>
+
+    </table>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_RESERVATION }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

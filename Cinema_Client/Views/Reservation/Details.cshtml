@@ -25,6 +25,7 @@
                         <th>
                             BILET
                         </th>
+                        <th></th>
                     </tr>
 
                     @foreach (var item in ViewBag.RDetails)
@@ -38,6 +39,9 @@
                             </td>
                             <td>
                                 @item.ticket.TYPE
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edytuj", "Edit", new { id = Model.ID_RESERVATION })
                             </td>
                         </tr>
                     }
@@ -66,6 +70,5 @@
 </div>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_RESERVATION }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Powrót do listy rezerwacji", "Index")
 </p>

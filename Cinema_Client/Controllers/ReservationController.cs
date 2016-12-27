@@ -38,38 +38,54 @@ namespace Cinema_Client.Controllers
              * tickets - type cena od 2d3d
              * 
              */
-            string login = Session["USER_LOGIN"].ToString();
-            var rESERVATIONS = db.RESERVATIONS.Include(r => r.PROGRAM).Include(r => r.USERS).Include(r => r.PROGRAM.MOVIES).Where(r => r.USER_LOGIN == login);
-            return View(rESERVATIONS.ToList());
+            if (Session["USER_LOGIN"] != null)
+            {
+                string login = Session["USER_LOGIN"].ToString();
+                var rESERVATIONS = db.RESERVATIONS.Include(r => r.PROGRAM).Include(r => r.USERS).Include(r => r.PROGRAM.MOVIES).Where(r => r.USER_LOGIN == login);
+                return View(rESERVATIONS.ToList());
+            }
+            else
+            {
+                return RedirectToAction("", "Home");
+            }
+
         }
 
         // GET: Reservation/Details/5
         public ActionResult Details(short? id)
         {
-            if (id == null)
+            if (Session["USER_LOGIN"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                RESERVATIONS rESERVATIONS = db.RESERVATIONS.Find(id);
+                if (rESERVATIONS == null)
+                {
+                    return HttpNotFound();
+                }
+                var RDetails = db.RESERVATIONS_DETAILS.Where(r => r.ID_RESERVATION == id).ToList();
+                string[] seat;
+                List<Detail> details = new List<Detail>();
+                Detail one_detail;
+
+                foreach (var item in RDetails)
+                {
+                    seat = item.ID_SEAT.Split('_');
+                    one_detail = new Detail(seat[0], seat[1], item.TICKETS);
+                    details.Add(one_detail);
+                }
+
+                ViewBag.RDetails = details;
+
+                return View(rESERVATIONS);
             }
-            RESERVATIONS rESERVATIONS = db.RESERVATIONS.Find(id);
-            if (rESERVATIONS == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("", "Home");
             }
-            var RDetails= db.RESERVATIONS_DETAILS.Where(r => r.ID_RESERVATION == id).ToList();
-            string[] seat;
-            List<Detail> details = new List<Detail>();
-            Detail one_detail;
-
-            foreach (var item in RDetails)
-            {
-                seat = item.ID_SEAT.Split('_');
-                one_detail = new Detail(seat[0], seat[1], item.TICKETS);
-                details.Add(one_detail);
-            }
-
-            ViewBag.RDetails = details;
-
-            return View(rESERVATIONS);
         }
 
         // GET: Reservation/Create

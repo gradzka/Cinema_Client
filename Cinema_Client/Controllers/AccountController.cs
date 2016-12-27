@@ -109,17 +109,6 @@ namespace Cinema_Client.Controllers
             }
             return View();
         }
-        public ActionResult LoggedIn()
-        {
-            if (Session["USER_LOGIN"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Login");
-            }
-        }
 
         //
         // POST: /Account/LogOff
@@ -127,9 +116,17 @@ namespace Cinema_Client.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            Session["USER_LOGIN"] = null;
-            Session["NAME"] = null;
-            return RedirectToAction("Index", "Home");
+            if (Session["USER_LOGIN"] != null)
+            {
+                Session["USER_LOGIN"] = null;
+                Session["NAME"] = null;
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return RedirectToAction("", "Home");
+            }
+            
         }
 
     }

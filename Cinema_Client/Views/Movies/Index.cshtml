@@ -8,6 +8,7 @@
 
 <table class="table">
     <tr>
+        <th></th>
         <th>
             TYTUŁ
         </th>
@@ -34,6 +35,9 @@
     {
         <tr>
             <td>
+                <img src="@item.IMAGE" alt="" style="width:auto; height:75px;">
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.TITLE)
             </td>
             <td>
@@ -52,7 +56,9 @@
                 @Html.DisplayFor(modelItem => item.DIRECTION)
             </td>
             <td>
-                @Html.ActionLink("Więcej...", "Details", new { id = item.ID_MOVIE })
+                @Html.ActionLink("Więcej", "Details", new { id = item.ID_MOVIE })
+                <br />
+                @Html.ActionLink("Zarezerwuj", "Details", new { id = item.ID_MOVIE })
             </td>
         </tr>
     }

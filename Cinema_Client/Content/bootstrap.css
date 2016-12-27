@@ -291,7 +291,6 @@ table {
   }
   .table td,
   .table th {
-
     background-color: #fff !important;
   }
   .btn > .caret,
@@ -302,6 +301,7 @@ table {
     border: 1px solid #000;
   }
   .table {
+            vertical-align: middle;
     border-collapse: collapse !important;
   }
   .table-bordered th,
@@ -2076,7 +2076,7 @@ fieldset[disabled] .btn {
 }
 
 .btn-default {
-  color: #333333;
+  color: #FFFFFF;
   background-color: #539ad7;
   border-color: #539ad7;
   font-weight: 600;

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Cinema_Client.Controllers
 {
+
     public class HomeController : Controller
     {
         private CinemaEntities db = new CinemaEntities();
@@ -21,6 +22,21 @@ namespace Cinema_Client.Controllers
 
             ViewBag.movie = mOVIES;
             ViewBag.movieNo = mOVIES.Count;
+            //ViewBag.middleMovie = middleMovie;
+            List<string> LinkList = new List<string>();   
+            foreach (var elem in mOVIES)
+            {
+                LinkList.Add(elem.IMAGE);
+            }
+            ViewBag.Link = LinkList;
+
+            List<string> IdList = new List<string>();
+            foreach(var elem in mOVIES)
+            {
+                IdList.Add(elem.ID_MOVIE);
+            }
+            ViewBag.Id = IdList;
+
 
             return View();
         }

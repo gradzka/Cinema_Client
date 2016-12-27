@@ -1,7 +1,62 @@
 ﻿@{
     ViewBag.Title = "Home Page";
-    ViewBag.middleMovie = 0;
 }
+
+<script type="text/javascript">
+
+
+    var linkArray= @Html.Raw(Json.Encode(@ViewBag.Link));
+    var previous=0;
+    var middle=1;
+    var next=2;
+
+    var IdMovieArray= @Html.Raw(Json.Encode(@ViewBag.Id));
+
+
+    function ChangeToNextImage()
+    {
+        //zmiana poprzedniego
+        previous = (previous <= 0) ? @ViewBag.movieNo - 1 : previous - 1;
+        document.getElementById("imgPrevious")
+            .src = linkArray[previous];
+
+        //zmiana środkowego
+        middle = (middle <= 0) ? @ViewBag.movieNo - 1 : middle - 1;
+        document.getElementById("imgMiddle")
+            .src = linkArray[middle];
+
+        document.getElementById("img_h")
+            .href ="@Url.Action("Details", "Movies")" + "/"+ IdMovieArray[middle];
+
+        //zmiana następnego
+        next = (next <= 0) ? @ViewBag.movieNo - 1 : next - 1;
+                document.getElementById("imgNext")
+                    .src = linkArray[next];
+            }
+
+            function ChangeToPreviousImage()
+            {
+                //zmiana poprzedniego
+                previous = (previous === @ViewBag.movieNo - 1) ? 0 : previous + 1;
+                document.getElementById("imgPrevious")
+                    .src = linkArray[previous];
+
+                //zmiana środkowego
+                middle = (middle === @ViewBag.movieNo - 1) ? 0 : middle+1;
+                document.getElementById("imgMiddle")
+                    .src = linkArray[middle];
+
+                document.getElementById("img_h")
+                    .href ="@Url.Action("Details", "Movies")" + "/"+ IdMovieArray[middle];
+
+                //zmiana następnego
+                next = (next === @ViewBag.movieNo - 1) ? 0 : next + 1;
+                document.getElementById("imgNext")
+                    .src = linkArray[next];
+            }
+
+</script>
+
 
 <table style="width:100%">
     <tr>
@@ -12,22 +67,20 @@
         <td style="width:30%" align="left"></td>
     </tr>
     <tr>
+
         <td style="width:30%" align="right">
-            @if (ViewBag.middleMovie - 1 < 0)
-            { <img src="@ViewBag.movie[ViewBag.movieNo - 1].IMAGE" class="transparent" alt="" style="width:auto; height:300px;">}
-            else
-            { <img src="@ViewBag.movie[ViewBag.middleMovie - 1].IMAGE" class="transparent" alt="" style="width:auto; height:300px;">}
+           <img id="imgPrevious" src="@ViewBag.movie[0].IMAGE" onclick="ChangeToPreviousImage()" class="transparent" alt="" style="width:auto; height:300px;">
         </td>
+
         <td style="width:40%" align="center">
-            <a href="@Url.Action("Details", "Movies", new { id = ViewBag.movie[0].ID_MOVIE })">
-                <img src="@ViewBag.movie[ViewBag.middleMovie].IMAGE" alt="" style="width:auto; height:500px;">
+            <a id="img_h" href="@Url.Action("Details", "Movies", new { id = ViewBag.movie[1].ID_MOVIE })">
+                <img id="imgMiddle" src="@ViewBag.movie[1].IMAGE" alt="" style="width:auto; height:500px;">
             </a>
         </td>
+
         <td style="width:30%" align="left">
-            @if (ViewBag.middleMovie > ViewBag.movieNo)
-            { <img src="@ViewBag.movie[0].IMAGE" class="transparent" alt="" style="width:auto; height:300px;">}
-            else
-            { <img src="@ViewBag.movie[ViewBag.middleMovie+1].IMAGE" class="transparent" alt="" style="width:auto; height:300px;">}
+            <img id="imgNext" src="@ViewBag.movie[2].IMAGE" onclick="ChangeToNextImage()" class="transparent" alt="" style="width:auto; height:300px;">
         </td>
+
     </tr>
 </table>

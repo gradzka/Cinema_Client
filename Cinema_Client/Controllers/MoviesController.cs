@@ -21,13 +21,14 @@ namespace Cinema_Client.Controllers
         }
 
         // GET: Movies/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string id) //Wiecej
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             MOVIES mOVIES = db.MOVIES.Find(id);
+
             if (mOVIES == null)
             {
                 return HttpNotFound();

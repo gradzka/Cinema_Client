@@ -13,7 +13,7 @@
     var IdMovieArray= @Html.Raw(Json.Encode(@ViewBag.Id));
 
 
-    function ChangeToNextImage()
+    function ChangeToPreviousImage()
     {
         //zmiana poprzedniego
         previous = (previous <= 0) ? @ViewBag.movieNo - 1 : previous - 1;
@@ -34,26 +34,26 @@
                     .src = linkArray[next];
             }
 
-            function ChangeToPreviousImage()
-            {
-                //zmiana poprzedniego
-                previous = (previous === @ViewBag.movieNo - 1) ? 0 : previous + 1;
-                document.getElementById("imgPrevious")
-                    .src = linkArray[previous];
+    function ChangeToNextImage()
+    {
+        //zmiana poprzedniego
+        previous = (previous === @ViewBag.movieNo - 1) ? 0 : previous + 1;
+        document.getElementById("imgPrevious")
+           .src = linkArray[previous];
 
-                //zmiana środkowego
-                middle = (middle === @ViewBag.movieNo - 1) ? 0 : middle+1;
-                document.getElementById("imgMiddle")
-                    .src = linkArray[middle];
+        //zmiana środkowego
+        middle = (middle === @ViewBag.movieNo - 1) ? 0 : middle+1;
+        document.getElementById("imgMiddle")
+           .src = linkArray[middle];
 
-                document.getElementById("img_h")
-                    .href ="@Url.Action("Details", "Movies")" + "/"+ IdMovieArray[middle];
+        document.getElementById("img_h")
+           .href ="@Url.Action("Details", "Movies")" + "/"+ IdMovieArray[middle];
 
-                //zmiana następnego
-                next = (next === @ViewBag.movieNo - 1) ? 0 : next + 1;
-                document.getElementById("imgNext")
-                    .src = linkArray[next];
-            }
+        //zmiana następnego
+        next = (next === @ViewBag.movieNo - 1) ? 0 : next + 1;
+        document.getElementById("imgNext")
+           .src = linkArray[next];
+     }
 
 </script>
 

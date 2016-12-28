@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Next";
+}
+
+<h2><MyTitle>@Session["mTitle"]</MyTitle></h2>
+<h4>@ViewBag.dateTimeHall</h4>
+
+<br />
+
+<table class="table-hover table" style="width:unset" align="center">
+    <tr>    <td colspan=3 class="noBorder" style="width:35px;"></td>   <td colspan="@ViewBag.screen" style="background-color:#000000; width:35px" align="center" class="noBorder"> EKRAN </td>  <td colspan=3 class="noBorder" style="width:35px"></td>   </tr>
+        @for (char i= 'A'; i <= @ViewBag.lastletter; i++)
+        {
+               
+            <tr>      
+                <td align="center">@i</td>
+                    @for (int j = 1; j <= @ViewBag.columns_No; j++)
+                {
+                    <td align="center" style="width:35px"><button type="button" class="btn btn-primary active" style="border-radius: 0px;width:25px; height:25px; padding:0px" align="center">@j</button> </td>
+                }
+                <td align="center">@i</td>
+            </tr>
+        }
+</table>
+

@@ -89,10 +89,48 @@ namespace Cinema_Client.Controllers
         }
 
         // GET: Reservation/Create
-        public ActionResult Create()
+        public ActionResult Create(string movieId, string programId)
         {
-            ViewBag.ID_PROGRAM = new SelectList(db.PROGRAM, "ID_PROGRAM", "ID_HALL");
-            ViewBag.USER_LOGIN = new SelectList(db.USERS, "USER_LOGIN", "PASSWORD");
+            if (movieId != null)
+            {
+                List<string> dataArray = new List<string>();
+                foreach (var elem in db.PROGRAM.Where(x => x.ID_MOVIE == movieId).ToList())
+                {
+                    dataArray.Add(elem.DATE.ToShortDateString() + " " + elem.TIME.ToString() +" Sala: " +elem.ID_HALL.ToString());
+                }
+
+                ViewBag.DateTimeHall = new SelectList(dataArray);
+
+                var MovieTitle = db.MOVIES.Where(x => x.ID_MOVIE == movieId).Select(x => x.TITLE).FirstOrDefault();
+                ViewBag.movieTitle = MovieTitle;
+
+                Session["mTitle"] = MovieTitle;
+                
+                //do stworzenia sali kinowej
+
+            }
+            if (programId!=null)
+            {
+                ViewBag.programId = programId;
+                var prId = Int32.Parse(programId);
+
+                var MovieIdentity = db.PROGRAM.Where(x => x.ID_PROGRAM == prId).Select(x=>x.ID_MOVIE).FirstOrDefault();
+                var MoId = MovieIdentity.ToString();
+
+                List<string> dataArray = new List<string>();
+                foreach (var elem in db.PROGRAM.Where(x => x.ID_MOVIE== MoId).ToList())
+                {
+                    dataArray.Add(elem.DATE.ToShortDateString() + " " + elem.TIME.ToString() + " Sala: " + elem.ID_HALL.ToString());
+                }
+
+                ViewBag.DateTime = new SelectList(dataArray);
+
+                var MovieTitle = db.MOVIES.Where(x => x.ID_MOVIE == MoId).Select(x => x.TITLE).FirstOrDefault();
+                ViewBag.movieTitle = MovieTitle;
+
+                Session["mTitle"] = MovieTitle;
+            }
+
             return View();
         }
 
@@ -112,7 +150,36 @@ namespace Cinema_Client.Controllers
 
             ViewBag.ID_PROGRAM = new SelectList(db.PROGRAM, "ID_PROGRAM", "ID_HALL", rESERVATIONS.ID_PROGRAM);
             ViewBag.USER_LOGIN = new SelectList(db.USERS, "USER_LOGIN", "PASSWORD", rESERVATIONS.USER_LOGIN);
+
             return View(rESERVATIONS);
+        }
+
+        [HttpPost]
+        public ActionResult Next(string DateTimeHall)
+        {
+            //Session["date_time_hall"] = DateTimeHall;
+            ViewBag.dateTimeHall = DateTimeHall;
+            var movietitle = Session["mTitle"];
+            string[] date_time_hall_Array = DateTimeHall.Split(' ');//3 -hall
+
+            List<string> seats = new List<string>();
+            var hall = date_time_hall_Array[3];
+            seats =db.SEATS.Where(x => x.ID_HALL == hall).Select(x => x.ID_SEAT).ToList();
+
+            //liczba rzedow - wymiar pionowy
+            //liczba siedzien - wymiar poziomy
+
+            int seats_number = seats.Count();
+            string []last_letter = seats.Last().Split('_');
+            int rows_number =(int)(last_letter[0][0])- 65 +1;
+            int columns_number = seats_number / rows_number;
+
+            //Session["rows_nO"]
+            ViewBag.rows_No = rows_number;
+            ViewBag.columns_No = columns_number;
+            ViewBag.screen = columns_number - 4;
+            ViewBag.lastletter = last_letter[0][0];
+            return View();
         }
 
         // GET: Reservation/Edit/5

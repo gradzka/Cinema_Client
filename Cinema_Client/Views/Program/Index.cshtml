@@ -6,7 +6,7 @@
 
 <h2><myTitle>Program</myTitle></h2>
 
-<table class="table" style="width: 70%">
+<table class="table-hover table" style="width: 70%">
     <tr>
         <th>
             DATA
@@ -51,7 +51,7 @@
                 @Html.DisplayFor(modelItem => item.VERSION)
             </td>
             <td>
-                @Html.ActionLink("Zarezerwuj", "Details", new { id = item.ID_MOVIE })
+                @Html.ActionLink("Zarezerwuj", "Create", "Reservation", new { programId = item.ID_PROGRAM.ToString()}, null)
             </td>
         </tr>
     }

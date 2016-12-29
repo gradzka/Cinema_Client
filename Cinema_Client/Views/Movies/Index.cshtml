@@ -6,6 +6,35 @@
 
 <h2><myTitle>Filmy</myTitle></h2>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            right:auto;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index:3;
+            top: -100px;
+            left:60px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+</body>
+</html>
+
 <table class="table table-hover" style="act">
     <tr>
         <th></th>
@@ -35,7 +64,13 @@
     {
         <tr>
             <td>
-                <img src="@item.IMAGE" alt="" style="width:auto; height:75px;">
+                <!--<img src="item.IMAGE" alt="" style="width:auto; height:75px;">-->
+                <div class="dropdown">
+                    <img src="@item.IMAGE" alt="" style="width:50px; height:auto; z-index:1">
+                    <div class="dropdown-content">
+                        <img src="@item.IMAGE" alt="" style="width:auto; height:260px; z-index:3 ">
+                    </div>
+                </div>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TITLE)

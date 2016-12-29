@@ -216,9 +216,10 @@ input[type="radio"] {
 }
 /* SQUARED ONE */
 .squaredOne {
-	width: 28px;
-	height: 28px;
+	width: 43px;
+	height: 43px;
 	background: #fcfff4;
+
 
 	background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
 	background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
@@ -235,11 +236,12 @@ input[type="radio"] {
 
 .squaredOne label {
 	cursor: pointer;
-	position: absolute;
-	width: 20px;
-	height: 20px;
+	position:absolute;
+	width: 35px;
+	height: 35px;
 	left: 4px;
 	top: 4px;
+    line-height: 35px;
 
 	-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
 	-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
@@ -258,12 +260,14 @@ input[type="radio"] {
 	opacity: 0;
 	content: '';
 	position: absolute;
-	width: 16px;
-	height: 16px;
+	width: 35px;
+	height: 35px;
 	background: #428bca;
 
-	top: 2px;
-	left: 2px;
+
+
+	top: 0px;
+	left: 0px;
 
 	-webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
 	-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);

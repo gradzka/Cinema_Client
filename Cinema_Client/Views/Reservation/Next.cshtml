@@ -7,20 +7,42 @@
 <h4>@ViewBag.dateTimeHall</h4>
 
 <br />
-
+@using (Html.BeginForm())
+{
 <table class="table-hover table" style="width:unset" align="center">
-    <tr>    <td colspan=3 class="noBorder" style="width:35px;"></td>   <td colspan="@ViewBag.screen" style="background-color:#000000; width:35px" align="center" class="noBorder"> EKRAN </td>  <td colspan=3 class="noBorder" style="width:35px"></td>   </tr>
-        @for (char i= 'A'; i <= @ViewBag.lastletter; i++)
+    <tr>    
+        <td colspan=3 class="noBorder" style="width:35px;"></td>   
+        <td colspan="@ViewBag.screen" style="background-color:#000000; width:35px" align="center" class="noBorder"> EKRAN </td>
+        <td colspan=3 class="noBorder" style="width:35px"></td>  
+    </tr>
+
+        @for (char i = 'A'; i <= @ViewBag.lastletter; i++)
         {
-               
+
             <tr>      
                 <td align="center">@i</td>
-                    @for (int j = 1; j <= @ViewBag.columns_No; j++)
+                @for (int j = 1; j <= @ViewBag.columns_No; j++)
                 {
-                    <td align="center" style="width:35px"><button type="button" class="btn btn-primary active" style="border-radius: 0px;width:25px; height:25px; padding:0px" align="center">@j</button> </td>
+                    <td align="center" style="width:35px">
+                    <div class="btn-group">
+                        <div class="squaredOne" data-toggle="dropdown">
+                            <input type="checkbox" value="@i@j" id="@i@j" name="seat" />
+                            <label for="@i@j">@j</label>
+
+                        </div>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a>Tablet</a></li>
+                                    <li><a>Smartphone</a></li>
+                                </ul>
+                     </div>
+
+                    <!--<input type="submit" disabled="disabled" name="submit" id="ij" value="j" class="btn btn-primary active" style="border-radius: 0px;width:25px; height:25px; padding:0px">-->
+                     </td>
                 }
                 <td align="center">@i</td>
             </tr>
         }
 </table>
 
+<input type="submit" value="Dalej" formaction='@Url.Action("SummarySeats", "Reservation")' class="btn btn-default" />
+}

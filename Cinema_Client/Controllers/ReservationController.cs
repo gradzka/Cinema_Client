@@ -179,7 +179,19 @@ namespace Cinema_Client.Controllers
             ViewBag.columns_No = columns_number;
             ViewBag.screen = columns_number - 4;
             ViewBag.lastletter = last_letter[0][0];
+
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult SummarySeats(string[] seat)
+        {
+            string s = "";
+            foreach (var item in seat)
+            {
+                s += item + " ";
+            }
+            return Content(s);
         }
 
         // GET: Reservation/Edit/5

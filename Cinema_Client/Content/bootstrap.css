@@ -3348,10 +3348,10 @@ input[type="button"].btn-block {
   z-index: 1000;
   display: none;
   float: left;
-  min-width: 160px;
-  padding: 5px 0;
-  margin: 2px 0 0;
-  font-size: 14px;
+  min-width: 40px;
+
+
+  font-size: 12px;
   list-style: none;
   background-color: #ffffff;
   border: 1px solid #cccccc;

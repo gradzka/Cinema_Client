@@ -180,6 +180,16 @@ namespace Cinema_Client.Controllers
             ViewBag.screen = columns_number - 4;
             ViewBag.lastletter = last_letter[0][0];
 
+            //Bilety
+            List<string> tickets = new List<string>();
+            foreach (var elem in db.TICKETS.ToList())
+            {
+                tickets.Add(elem.TYPE);
+            }
+
+            ViewBag.ticketstype = new SelectList(tickets);
+
+
             return View();
         }
 

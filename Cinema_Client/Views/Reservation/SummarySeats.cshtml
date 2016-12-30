@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "SummarySeats";
+}
+
+<h2><myTitle2>Podsumowanie Rezerwacji</myTitle2></h2>
+<myTitle>@Session["mTitle"]</myTitle>
+<h4>@Session["DateTimeHall"]</h4>
+
+<br />
+ <table class="table-hover table" style="width: 30%">
+<tr>
+    <th>
+        RODZAJ BILETU
+    </th>
+    <th>
+        MIEJSCE
+    </th>                                
+</tr>
+@foreach (KeyValuePair<string, string> pair in @ViewBag.seatTicket)
+{
+    <tr>
+        <td>
+            @pair.Value          
+        </td>
+        <td>
+            @pair.Key
+        </td>
+    </tr>
+}
+</table>
+
+@using (Html.BeginForm("SummaryReservation", "Reservation"))
+{
+    <input type="submit" value="Zatwierdź" onclick='@Url.Action("SummaryReservation", "Reservation")' class="btn btn-default" />
+}
+

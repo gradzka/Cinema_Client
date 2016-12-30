@@ -31,7 +31,7 @@
     function selectedticket(menu) 
     {
         var result = menu.id.substring(2);
-        document.getElementById(result).value = document.getElementById(result).id + " " + menu.value;
+        document.getElementById(result).value = document.getElementById(result).value + " " + menu.value;
         menu.style.display = "none";
         document.getElementById("NextButton").disabled = false;
     }
@@ -39,7 +39,7 @@
 
 
 <h2><MyTitle>@Session["mTitle"]</MyTitle></h2>
-<h4>@ViewBag.dateTimeHall</h4>
+<h4>@Session["DateTimeHall"]</h4>
 
 <br />
 @using (Html.BeginForm())

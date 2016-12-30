@@ -98,11 +98,10 @@ namespace Cinema_Client.Controllers
                 {
                     dataArray.Add(elem.DATE.ToShortDateString() + " " + elem.TIME.ToString() +" Sala: " +elem.ID_HALL.ToString());
                 }
-
+                
                 ViewBag.DateTimeHall = new SelectList(dataArray);
 
                 var MovieTitle = db.MOVIES.Where(x => x.ID_MOVIE == movieId).Select(x => x.TITLE).FirstOrDefault();
-                ViewBag.movieTitle = MovieTitle;
 
                 Session["mTitle"] = MovieTitle;
                 
@@ -126,7 +125,6 @@ namespace Cinema_Client.Controllers
                 ViewBag.DateTime = new SelectList(dataArray);
 
                 var MovieTitle = db.MOVIES.Where(x => x.ID_MOVIE == MoId).Select(x => x.TITLE).FirstOrDefault();
-                ViewBag.movieTitle = MovieTitle;
 
                 Session["mTitle"] = MovieTitle;
             }
@@ -158,7 +156,7 @@ namespace Cinema_Client.Controllers
         public ActionResult Next(string DateTimeHall)
         {
             //Session["date_time_hall"] = DateTimeHall;
-            ViewBag.dateTimeHall = DateTimeHall;
+            Session["DateTimeHall"] = DateTimeHall;
             var movietitle = Session["mTitle"];
             string[] date_time_hall_Array = DateTimeHall.Split(' ');//3 -hall
 
@@ -170,15 +168,15 @@ namespace Cinema_Client.Controllers
             //liczba siedzien - wymiar poziomy
 
             int seats_number = seats.Count();
-            string []last_letter = seats.Last().Split('_');
-            int rows_number =(int)(last_letter[0][0])- 65 +1;
+            string last_letter = seats.Last();
+            int rows_number =(int)(last_letter[0])- 65 +1;
             int columns_number = seats_number / rows_number;
 
             //Session["rows_nO"]
             ViewBag.rows_No = rows_number;
             ViewBag.columns_No = columns_number;
             ViewBag.screen = columns_number - 4;
-            ViewBag.lastletter = last_letter[0][0];
+            ViewBag.lastletter = last_letter[0];
 
             //Bilety
             List<string> tickets = new List<string>();
@@ -196,13 +194,29 @@ namespace Cinema_Client.Controllers
         [HttpPost]
         public ActionResult SummarySeats(string[] seat)
         {
-            string s = "";
+            Dictionary<string, string> seatTicket = new Dictionary<string, string>();
+            string []seat_ticket;
             foreach (var item in seat)
             {
-                s += item + " ";
+                //klucz to zajete siedzenie, wartosc rodzaj biletu
+                seat_ticket = item.Split(' ');
+                seatTicket.Add(seat_ticket[0], seat_ticket[1]);
             }
-            s += "\n";
-            return Content(s);
+
+            ViewBag.seatTicket = seatTicket;
+            //return Content(s);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SummaryReservation()
+        {
+            //RESERVATIONS rESERVATIONS=new RESERVATIONS();
+            //rESERVATIONS.ID_PROGRAM = 2;
+            //rESERVATIONS.USER_LOGIN = "Kowalski_93";
+            //db.RESERVATIONS.Add(rESERVATIONS);
+            //db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Reservation/Edit/5

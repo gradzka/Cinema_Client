@@ -588,6 +588,20 @@ myTitle,
   color: #ff5555
 }
 
+myTitle2,
+.myTitle2 {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    font-size: 30px;
+    font-family: "Helvetica Neue",'Gill Sans MT',sans-serif;
+    font: 800;
+    font-weight: 600;
+    line-height: 1.1;
+    orphans: 3;
+    widows: 3;
+    color: #46b8da
+}
+
 h1 small,
 h2 small,
 h3 small,

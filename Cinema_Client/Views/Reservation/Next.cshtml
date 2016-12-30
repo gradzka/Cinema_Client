@@ -4,18 +4,36 @@
 }
 
 <script language="JavaScript" type="text/javascript">
+
+    var numberOfSelectedSeats = 0;
+
     function ticektschange(name, enable) {
         if (enable.checked == false) {
             //zmiana poprzedniego
             enable.checked = true;
             document.getElementById(name)
                 .style.display = "block";
+            document.getElementById(name).selectedIndex = -1;
+            numberOfSelectedSeats += 1;
         }
         else {
             enable.checked = false;
             document.getElementById(name)
                .style.display = "none";
+            numberOfSelectedSeats -= 1;
+            if(numberOfSelectedSeats==0)
+            {
+                document.getElementById("NextButton").disabled = true;
+            }
         }
+    }
+
+    function selectedticket(menu) 
+    {
+        var result = menu.id.substring(2);
+        document.getElementById(result).value = document.getElementById(result).id + " " + menu.value;
+        menu.style.display = "none";
+        document.getElementById("NextButton").disabled = false;
     }
 </script> 
 
@@ -35,7 +53,6 @@
 
         @for (char i = 'A'; i <= @ViewBag.lastletter; i++)
         {
-
             <tr>
                 <td align="center" style="vertical-align:middle">@i</td>
                 @for (int j = 1; j <= @ViewBag.columns_No; j++)
@@ -46,7 +63,7 @@
                                 <input type="checkbox" name="seat" value="@i@j" id="@i@j"/>
                                 <label for="@i@j"  onclick="ticektschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle">@j</label>
                             </div>
-                            @Html.DropDownList("ticketstype", (SelectList)ViewBag.ticketstype, htmlAttributes: new { id = "dl"+@i+""+@j, @class = "dropdown-menu", @style = "display:none" })
+                            @Html.DropDownList("ticketstype", (SelectList)ViewBag.ticketstype, /*"-Select One-" ,*/ htmlAttributes: new { id = "dl"+@i+""+@j, @class = "dropdown-menu", @style = "display:none", @onchange = "selectedticket(this)" })
                         </div>
                     </td>
                 }
@@ -55,5 +72,5 @@
         }
 </table>
 
-<input type="submit" value="Dalej" formaction='@Url.Action("SummarySeats", "Reservation")' class="btn btn-default" />
+<input type="submit" id="NextButton" value="Dalej" formaction='@Url.Action("SummarySeats", "Reservation")' class="btn btn-default" disabled = "disabled"/>
 }

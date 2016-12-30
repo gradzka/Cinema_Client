@@ -201,6 +201,7 @@ namespace Cinema_Client.Controllers
             {
                 s += item + " ";
             }
+            s += "\n";
             return Content(s);
         }
 

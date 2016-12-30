@@ -17,16 +17,17 @@
         MIEJSCE
     </th>                                
 </tr>
-@foreach (KeyValuePair<string, string> pair in @ViewBag.seatTicket)
+
+@foreach (KeyValuePair<string, string> pair in (Dictionary<string, string>)@Session["seatTicket"])
 {
-    <tr>
-        <td>
-            @pair.Value          
-        </td>
-        <td>
-            @pair.Key
-        </td>
-    </tr>
+  <tr>
+     <td>
+         @pair.Value
+     </td>
+     <td>
+         @pair.Key
+     </td>
+ </tr>
 }
 </table>
 

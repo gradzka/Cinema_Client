@@ -203,7 +203,8 @@ namespace Cinema_Client.Controllers
                 seatTicket.Add(seat_ticket[0], seat_ticket[1]);
             }
 
-            ViewBag.seatTicket = seatTicket;
+            //ViewBag.seatTicket = seatTicket;
+            Session["seatTicket"] = seatTicket;
             //return Content(s);
             return View();
         }
@@ -211,11 +212,50 @@ namespace Cinema_Client.Controllers
         [HttpPost]
         public ActionResult SummaryReservation()
         {
-            //RESERVATIONS rESERVATIONS=new RESERVATIONS();
-            //rESERVATIONS.ID_PROGRAM = 2;
-            //rESERVATIONS.USER_LOGIN = "Kowalski_93";
-            //db.RESERVATIONS.Add(rESERVATIONS);
-            //db.SaveChanges();
+            RESERVATIONS rESERVATIONS=new RESERVATIONS();
+            string dateTimeHall = Session["DateTimeHall"].ToString();
+            string[] date_time_hall_Array = dateTimeHall.Split(' ');//3 -hall
+            string[] date = date_time_hall_Array[0].Split('-');
+            //year, month, day
+            DateTime YearMonthDay = new DateTime(Int32.Parse(date[0]), Int32.Parse(date[1]), Int32.Parse(date[2]));
+            //hour, minutes, seconds
+            string[] time = date_time_hall_Array[1].Split(':');
+            TimeSpan HourMinutesSeconds = new TimeSpan(Int32.Parse(time[0]), Int32.Parse(time[1]), Int32.Parse(time[2]));
+
+            string Hallid = date_time_hall_Array[3];
+            //ID_Program
+            var idProgram = db.PROGRAM.Where
+                (x => x.DATE == YearMonthDay &&
+                x.TIME == HourMinutesSeconds &&
+                x.ID_HALL == Hallid).Select(x => x.ID_PROGRAM).FirstOrDefault();
+
+            string userLogin = Session["USER_LOGIN"].ToString();
+
+
+            rESERVATIONS.ID_PROGRAM = idProgram;
+            rESERVATIONS.USER_LOGIN = userLogin;
+            db.RESERVATIONS.Add(rESERVATIONS);
+            db.SaveChanges();
+
+            //id_reser  |   id_seat     |id_ticket
+            RESERVATIONS_DETAILS rESERVATIONS_DETAILS;
+
+             var idReservation = rESERVATIONS.ID_RESERVATION;
+            Dictionary<string, string> seatTicket = (Dictionary< string, string>) Session["seatTicket"];
+
+            //pair.Value - rodzaj biletu
+            //pair.Key - miejsce
+            foreach (KeyValuePair<string, string> pair in seatTicket)
+            {
+                rESERVATIONS_DETAILS = new RESERVATIONS_DETAILS();
+                rESERVATIONS_DETAILS.ID_RESERVATION= idReservation;
+                rESERVATIONS_DETAILS.ID_SEAT = pair.Key;
+                rESERVATIONS_DETAILS.ID_TICKET = db.TICKETS.Where(x => x.TYPE == pair.Value).Select(x => x.ID_TICKET).FirstOrDefault();
+                db.RESERVATIONS_DETAILS.Add(rESERVATIONS_DETAILS);
+            }
+
+            db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 

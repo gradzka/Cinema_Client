@@ -17,9 +17,6 @@
                 <table class="table" align="center" style="width: 70%">
                     <tr>
                         <th>
-                            RZĄD
-                        </th>
-                        <th>
                             MIEJSCE
                         </th>
                         <th>
@@ -32,10 +29,7 @@
                     {
                         <tr>
                             <td>
-                                @item.row
-                            </td>
-                            <td>
-                                @item.seat_no
+                                @item.seat
                             </td>
                             <td>
                                 @item.ticket.TYPE
@@ -68,7 +62,7 @@
 
     </table>
 </div>
-
+<br />
 <p>
     @Html.ActionLink("Powrót do listy rezerwacji", "Index")
 </p>

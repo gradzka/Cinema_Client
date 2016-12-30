@@ -12,14 +12,12 @@ namespace Cinema_Client.Controllers
 {
     public class Detail
     {
-        public string row;
-        public string seat_no;
+        public string seat;
         public TICKETS ticket;
 
-        public Detail(string row, string seat_no, TICKETS ticket)
+        public Detail(string seat, TICKETS ticket)
         {
-            this.row = row;
-            this.seat_no = seat_no;
+            this.seat = seat;
             this.ticket = ticket;
         }
     }
@@ -67,14 +65,14 @@ namespace Cinema_Client.Controllers
                     return HttpNotFound();
                 }
                 var RDetails = db.RESERVATIONS_DETAILS.Where(r => r.ID_RESERVATION == id).ToList();
-                string[] seat;
+                string seat;
                 List<Detail> details = new List<Detail>();
                 Detail one_detail;
 
                 foreach (var item in RDetails)
                 {
-                    seat = item.ID_SEAT.Split('_');
-                    one_detail = new Detail(seat[0], seat[1], item.TICKETS);
+                    seat = item.ID_SEAT;
+                    one_detail = new Detail(seat, item.TICKETS);
                     details.Add(one_detail);
                 }
 
@@ -306,6 +304,16 @@ namespace Cinema_Client.Controllers
             {
                 return HttpNotFound();
             }
+            var RDetails = db.RESERVATIONS_DETAILS.Where(r => r.ID_RESERVATION == id).ToList();
+            Dictionary<string, string> seatTicket = new Dictionary<string, string>();
+
+            foreach (var item in RDetails)
+            {
+                seatTicket.Add(item.ID_SEAT, db.TICKETS.Where(x => x.ID_TICKET == item.ID_TICKET).Select(x => x.TYPE).FirstOrDefault());
+            }
+
+            Session["seatTicket"] = seatTicket;
+
             return View(rESERVATIONS);
         }
 

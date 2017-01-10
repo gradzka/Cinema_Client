@@ -59,10 +59,38 @@
                 {
                     <td align="center" style="width:40px; vertical-align:middle">
                         <div class="btn-group">
-                            <div class="squaredOne" data-toggle="dropdown">
+                           @if (ViewBag.vip.Contains(@i+@j.ToString()) == false) //Zwykle
+                           {
+                            <div class="squaredOne" data-toggle="dropdown" >
                                 <input type="checkbox" name="seat" value="@i@j" id="@i@j"/>
-                                <label for="@i@j"  onclick="ticektschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle">@j</label>
+
+                                @if (ViewBag.bookedSeat.Contains(@i + @j.ToString()) == true)
+                                {
+                                    <label for="@i@j"  onclick="ticektschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle" disabled="disabled">@j</label>
+                                }
+                                else
+                                {
+                                    <label for="@i@j" onclick="ticektschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle">@j</label>
+                                }
+
                             </div>
+                           }
+                           else //VIP
+                           {
+                            <div class="squaredOne" data-toggle="dropdown" style="background:#b40505">
+                                <input type="checkbox" name="seat" value="@i@j" id="@i@j" />
+                                @if (ViewBag.bookedSeat.Contains(@i + @j.ToString()) == true)
+                                {
+                                    <label for="@i@j" onclick="ticektschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle" disabled="disabled">@j</label>
+                                }
+                                else
+                                {
+                                    <label for="@i@j" onclick="ticektschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle">@j</label>
+                                }
+                            </div>
+                           }
+
+
                             @Html.DropDownList("ticketstype", (SelectList)ViewBag.ticketstype, /*"-Select One-" ,*/ htmlAttributes: new { id = "dl"+@i+""+@j, @class = "dropdown-menu", @style = "display:none", @onchange = "selectedticket(this)" })
                         </div>
                     </td>

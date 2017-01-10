@@ -162,6 +162,9 @@ namespace Cinema_Client.Controllers
             var hall = date_time_hall_Array[3];
             seats =db.SEATS.Where(x => x.ID_HALL == hall).Select(x => x.ID_SEAT).ToList();
 
+            var vip = db.SEATS.Where(x => x.ID_HALL == hall && x.VIP == true).Select(x => x.ID_SEAT).ToList();
+            ViewBag.vip = vip;
+
             //liczba rzedow - wymiar pionowy
             //liczba siedzien - wymiar poziomy
 
@@ -185,7 +188,28 @@ namespace Cinema_Client.Controllers
 
             ViewBag.ticketstype = new SelectList(tickets);
 
+            /*
+             * miejsca zajete: PROGRAM(ID_PROGRAM, ID_HALL)
+             * RESERVATIONS(ID_PROGRAM, ID_RESERVATION)
+             * RESERVATIONS_DETAILS(ID_SEAT, ID_RESERVATION)
+             */
+            string[] date = date_time_hall_Array[0].Split('-');
+            //year, month, day
+            DateTime YearMonthDay = new DateTime(Int32.Parse(date[0]), Int32.Parse(date[1]), Int32.Parse(date[2]));
+            //hour, minutes, seconds
+            string[] time = date_time_hall_Array[1].Split(':');
+            TimeSpan HourMinutesSeconds = new TimeSpan(Int32.Parse(time[0]), Int32.Parse(time[1]), Int32.Parse(time[2]));
 
+            string Hallid = date_time_hall_Array[3];
+            //ID_Program
+            var idProgram = db.PROGRAM.Where
+                (x => x.DATE == YearMonthDay &&
+                x.TIME == HourMinutesSeconds &&
+                x.ID_HALL == Hallid).Select(x => x.ID_PROGRAM).FirstOrDefault();
+
+            //lista zajetych krzesel
+            var bookedSeat = db.RESERVATIONS_DETAILS.Include(r => r.RESERVATIONS).Include(r => r.RESERVATIONS.PROGRAM).Where(r => r.RESERVATIONS.ID_PROGRAM == idProgram).Select(r=> r.ID_SEAT).ToList();
+            ViewBag.bookedSeat = bookedSeat;
             return View();
         }
 
@@ -193,11 +217,17 @@ namespace Cinema_Client.Controllers
         public ActionResult SummarySeats(string[] seat)
         {
             Dictionary<string, string> seatTicket = new Dictionary<string, string>();
+
+            string[] date_time_hall_Array = Session["DateTimeHall"].ToString().Split(' ');//3 -hall
+            var hall = date_time_hall_Array[3];
+            var vip = db.SEATS.Where(x => x.ID_HALL == hall && x.VIP == true).Select(x => x.ID_SEAT).ToList();
             string []seat_ticket;
             foreach (var item in seat)
             {
                 //klucz to zajete siedzenie, wartosc rodzaj biletu
+
                 seat_ticket = item.Split(' ');
+                if (vip.Contains(seat_ticket[0]) == true) { seat_ticket[0] += " VIP"; }
                 seatTicket.Add(seat_ticket[0], seat_ticket[1]);
             }
 
@@ -247,7 +277,9 @@ namespace Cinema_Client.Controllers
             {
                 rESERVATIONS_DETAILS = new RESERVATIONS_DETAILS();
                 rESERVATIONS_DETAILS.ID_RESERVATION= idReservation;
-                rESERVATIONS_DETAILS.ID_SEAT = pair.Key;
+                if (pair.Key.Contains("VIP"))
+                { rESERVATIONS_DETAILS.ID_SEAT = pair.Key.Remove(pair.Key.Length - 4); }
+                else { rESERVATIONS_DETAILS.ID_SEAT = pair.Key; }
                 rESERVATIONS_DETAILS.ID_TICKET = db.TICKETS.Where(x => x.TYPE == pair.Value).Select(x => x.ID_TICKET).FirstOrDefault();
                 db.RESERVATIONS_DETAILS.Add(rESERVATIONS_DETAILS);
             }

@@ -108,7 +108,7 @@ namespace Cinema_Client.Controllers
             }
             if (programId!=null)
             {
-                ViewBag.programId = programId;
+                //ViewBag.programId = programId;
                 var prId = Int32.Parse(programId);
 
                 var MovieIdentity = db.PROGRAM.Where(x => x.ID_PROGRAM == prId).Select(x=>x.ID_MOVIE).FirstOrDefault();

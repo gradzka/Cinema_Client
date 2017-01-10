@@ -215,20 +215,6 @@ input[type="radio"] {
 	background: #e6e6e6;
 }
 
-/* SQUARED VIP */
-.squaredVip {
-	width: 43px;
-	height: 43px;
-	background: #de0000;
-
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );
-	-webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-	-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-	box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-	position: relative;
-
-}
-
 /* SQUARED ONE */
 .squaredOne {
 	width: 43px;
@@ -240,7 +226,6 @@ input[type="radio"] {
 	-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
 	box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
 	position: relative;
-
 }
 
 
@@ -276,8 +261,6 @@ input[type="radio"] {
 	height: 35px;
 	background: #428bca;
 
-
-
 	top: 0px;
 	left: 0px;
 
@@ -302,7 +285,7 @@ input[type="radio"] {
 
 .squaredOne label[disabled]
 {
-    background: #164d71;
+    background: #ad0d0d;
     pointer-events: none;
 }
 

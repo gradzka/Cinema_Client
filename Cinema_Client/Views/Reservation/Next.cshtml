@@ -7,36 +7,41 @@
 
     var numberOfSelectedSeats = 0;
 
-    function ticektschange(name, enable) {
+    function ticketschange(name, enable) {
         if (enable.checked == false) {
             //zmiana poprzedniego
             enable.checked = true;
             document.getElementById(name)
                 .style.display = "block";
-            document.getElementById(name).selectedIndex = -1;
+            document.getElementById(name).selectedIndex = 0;
             numberOfSelectedSeats += 1;
         }
         else {
             enable.checked = false;
             document.getElementById(name)
                .style.display = "none";
+            var result = name.substring(2);
+            var label = "label" + result;
+            document.getElementById(label).title = "";
             numberOfSelectedSeats -= 1;
-            if(numberOfSelectedSeats==0)
-            {
+            if (numberOfSelectedSeats == 0) {
                 document.getElementById("NextButton").disabled = true;
             }
         }
     }
 
-    function selectedticket(menu) 
-    {
-        var result = menu.id.substring(2);
-        document.getElementById(result).value = document.getElementById(result).value + " " + menu.value;
-        menu.style.display = "none";
-        document.getElementById("NextButton").disabled = false;
+    function selectedticket(menu) {
+        if (menu.value != "Wybierz rodziaj biletu:")
+        {
+            var result = menu.id.substring(2);
+            document.getElementById(result).value = document.getElementById(result).value + " " + menu.value;
+            var label = "label" + result;
+            document.getElementById(label).title = menu.value;
+            menu.style.display = "none";
+            document.getElementById("NextButton").disabled = false;
+        }
     }
-</script> 
-
+</script>
 
 <h2><MyTitle>@Session["mTitle"]</MyTitle></h2>
 <h4>@Session["DateTimeHall"]</h4>
@@ -44,12 +49,12 @@
 <br />
 @using (Html.BeginForm())
 {
-<table class="table-hover table" style="width:unset" align="center">
-    <tr>    
-        <td colspan=3 class="noBorder" style="width:40px;"></td>   
-        <td colspan="@ViewBag.screen" style="background-color:#000000; width:40px" align="center" class="noBorder"> EKRAN </td>
-        <td colspan=3 class="noBorder" style="width:40px"></td>  
-    </tr>
+    <table class="table-hover table" style="width:unset" align="center">
+        <tr>
+            <td colspan=3 class="noBorder" style="width:40px;"></td>
+            <td colspan="@ViewBag.screen" style="background-color:#000000; width:40px" align="center" class="noBorder"> EKRAN </td>
+            <td colspan=3 class="noBorder" style="width:40px"></td>
+        </tr>
 
         @for (char i = 'A'; i <= @ViewBag.lastletter; i++)
         {
@@ -59,46 +64,92 @@
                 {
                     <td align="center" style="width:40px; vertical-align:middle">
                         <div class="btn-group">
-                           @if (ViewBag.vip.Contains(@i+@j.ToString()) == false) //Zwykle
-                           {
-                            <div class="squaredOne" data-toggle="dropdown" >
-                                <input type="checkbox" name="seat" value="@i@j" id="@i@j"/>
+                        @{ 
+                            string labelid = "label" + i.ToString() + j.ToString();
+                            if (ViewBag.vip.Contains(@i + @j.ToString()) == false) //Zwykle
+                            {
+                                <div class="squaredOne" data-toggle="dropdown">
+                                    <input type="checkbox" name="seat" value="@i@j" id="@i@j" />
 
-                                @if (ViewBag.bookedSeat.Contains(@i + @j.ToString()) == true)
-                                {
-                                    <label for="@i@j"  onclick="ticektschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle" disabled="disabled">@j</label>
-                                }
-                                else
-                                {
-                                    <label for="@i@j" onclick="ticektschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle">@j</label>
+                                    @if (ViewBag.bookedSeat.Contains(@i + @j.ToString()) == true)
+                                    {
+                                        <label for="@i@j" onclick="ticketschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle" disabled="disabled">@j</label>
+                                    }
+                                    else
+                                    {
+                                        <label id="@labelid" for="@i@j" onclick="ticketschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle">@j</label>
+                                    }
+
+                                </div>
+                            }
+                            else //VIP
+                            {
+                                <div class="squaredOne" data-toggle="dropdown" style="background:#000000">
+                                    <input type="checkbox" name="seat" value="@i@j" id="@i@j" />
+                                    @if (ViewBag.bookedSeat.Contains(@i + @j.ToString()) == true)
+                                    {
+                                        <label for="@i@j" onclick="ticketschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle" disabled="disabled">@j</label>
+                                    }
+                                    else
+                                    {
+
+                                        <label id="@labelid" for="@i@j" onclick="ticketschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle">@j</label>
+                                    }
+                                </div>
+                            }
                                 }
 
-                            </div>
-                           }
-                           else //VIP
-                           {
-                            <div class="squaredOne" data-toggle="dropdown" style="background:#b40505">
-                                <input type="checkbox" name="seat" value="@i@j" id="@i@j" />
-                                @if (ViewBag.bookedSeat.Contains(@i + @j.ToString()) == true)
-                                {
-                                    <label for="@i@j" onclick="ticektschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle" disabled="disabled">@j</label>
-                                }
-                                else
-                                {
-                                    <label for="@i@j" onclick="ticektschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle">@j</label>
-                                }
-                            </div>
-                           }
-
-
-                            @Html.DropDownList("ticketstype", (SelectList)ViewBag.ticketstype, /*"-Select One-" ,*/ htmlAttributes: new { id = "dl"+@i+""+@j, @class = "dropdown-menu", @style = "display:none", @onchange = "selectedticket(this)" })
+                            @Html.DropDownList("ticketstype", (SelectList)ViewBag.ticketstype, "Wybierz rodziaj biletu:" , htmlAttributes: new { id = "dl" + @i + "" + @j, @class = "dropdown-menu", @style = "display:none", @onchange = "selectedticket(this)" })
                         </div>
                     </td>
                 }
                 <td align="center" style="vertical-align:middle">@i</td>
             </tr>
         }
-</table>
+    </table>
+    
+        <table style="width:unset" align="center">
+            <tr>
+                <td colspan=7 align="center" style="height:50px; vertical-align:middle" class="noBorder">Legenda</td>
+            </tr>
+            <tr>
+                <td align="center" style="width:40px; vertical-align:middle">
+                    <div class="squaredOne" data-toggle="dropdown">
+                        <input type="checkbox" value="def_seat" />
+                        <label for="def_seat" style="vertical-align:middle" title="Miejsce dostępne">1</label>
+                    </div>
+                </td>
 
-<input type="submit" id="NextButton" value="Dalej" formaction='@Url.Action("SummarySeats", "Reservation")' class="btn btn-default" disabled = "disabled"/>
+                <td align="center" style="width:20px; vertical-align:middle"></td>
+
+                <td align="center" style="width:40px; vertical-align:middle">
+                    <div class="squaredOne" data-toggle="dropdown" style="background:#000000">
+                        <input type="checkbox" value="VIP_seat" />
+                        <label for="VIP_seat" style="vertical-align:middle" title="Miejsce VIP">2</label>
+                    </div>
+                </td>
+
+                <td align="center" style="width:20px; vertical-align:middle"></td>
+
+                <td align="center" style="width:40px; vertical-align:middle">
+                    <div class="squaredOne" data-toggle="dropdown">
+                        <input type="checkbox" value="book_seat" />
+                        <label for="book_seat" style="vertical-align:middle; pointer-events:auto" title="Miejsce zajęte" disabled="disabled">3</label>
+                    </div>
+                </td>
+
+                <td align="center" style="width:20px; vertical-align:middle"></td>
+
+                <td align="center" style="width:40px; vertical-align:middle">
+                    <div class="squaredOne" data-toggle="dropdown">
+                        <input type="checkbox" value="sel_seat" checked="checked" />
+                        <label for="sel_seat" style="vertical-align:middle" title="Miejsce wybrane przez użytkownika">4</label>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <p align="right">
+            <input type="submit" id="NextButton" value="Dalej" formaction='@Url.Action("SummarySeats", "Reservation")' class="btn btn-default" disabled="disabled" />
+        </p>
 }

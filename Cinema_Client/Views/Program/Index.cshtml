@@ -29,8 +29,8 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DATE))
@@ -51,9 +51,15 @@
                 @Html.DisplayFor(modelItem => item.VERSION)
             </td>
             <td>
-                @Html.ActionLink("Zarezerwuj", "Create", "Reservation", new { programId = item.ID_PROGRAM.ToString()}, null)
-            </td>
+                
+                
+                @using (Html.BeginForm("Next", "Reservation"))
+                {
+                    @Html.Hidden("DateTimeHall", item.DATE.ToShortDateString() + " " + item.TIME.ToString() + " Sala: " + item.ID_HALL.ToString())
+                    <input type="submit" value="Zarezerwuj" class="btn btn-default"/>
+                }
+</td>
         </tr>
-    }
+        }
 
 </table>

@@ -91,9 +91,8 @@
                 @Html.DisplayFor(modelItem => item.DIRECTION)
             </td>
             <td>
-                @Html.ActionLink("Więcej", "Details", new { id = item.ID_MOVIE })
-                <br />
-                @Html.ActionLink("Zarezerwuj", "Create", "Reservation", new { movieId = item.ID_MOVIE }, null)
+                @Html.ActionLink("Więcej", "Details", new { id = item.ID_MOVIE }, new { @class = "btn btn-default", @style= "margin-top: 3px; margin-bottom: 7px" })
+                @Html.ActionLink("Zarezerwuj", "Create", "Reservation", new { movieId = item.ID_MOVIE }, new { @class = "btn btn-default"})
             </td>
         </tr>
     }

@@ -26,6 +26,7 @@
             numberOfSelectedSeats -= 1;
             if (numberOfSelectedSeats == 0) {
                 document.getElementById("NextButton").disabled = true;
+                document.getElementById("NextButton").title = "Aby przejść dalej, wybierz co najmniej jedno miejsce";
             }
         }
     }
@@ -38,7 +39,10 @@
             var label = "label" + result;
             document.getElementById(label).title = menu.value;
             menu.style.display = "none";
-            document.getElementById("NextButton").disabled = false;
+            if (numberOfSelectedSeats > 0) {
+                document.getElementById("NextButton").disabled = false;
+                document.getElementById("NextButton").title = "";
+            }
         }
     }
 </script>
@@ -110,7 +114,7 @@
     
         <table style="width:unset" align="center">
             <tr>
-                <td colspan=7 align="center" style="height:50px; vertical-align:middle" class="noBorder">Legenda</td>
+                <td colspan=7 align="center" style="height:50px; vertical-align:middle" class="noBorder"><b>Legenda</b></td>
             </tr>
             <tr>
                 <td align="center" style="width:40px; vertical-align:middle">
@@ -150,6 +154,6 @@
         </table>
 
         <p align="right">
-            <input type="submit" id="NextButton" value="Dalej" formaction='@Url.Action("SummarySeats", "Reservation")' class="btn btn-default" disabled="disabled" />
+            <input type="submit" id="NextButton" title="Aby przejść dalej, wybierz co najmniej jedno miejsce" value="Dalej" formaction='@Url.Action("SummarySeats", "Reservation")' class="btn btn-default" disabled="disabled" style="filter: alpha(opacity=30)" />
         </p>
 }

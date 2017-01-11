@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Cinema_Client;
+using System.Web.Caching;
 
 namespace Cinema_Client.Controllers
 {
@@ -150,12 +151,12 @@ namespace Cinema_Client.Controllers
             return View(rESERVATIONS);
         }
 
-        [HttpPost]
+        [HttpPost] [OutputCache(NoStore =true, Duration =0)]
         public ActionResult Next(string DateTimeHall)
         {
             //Session["date_time_hall"] = DateTimeHall;
-            Session["DateTimeHall"] = DateTimeHall;
-            var movietitle = Session["mTitle"];
+            Session["DateTimeHall"] = DateTimeHall;            
+
             string[] date_time_hall_Array = DateTimeHall.Split(' ');//3 -hall
 
             List<string> seats = new List<string>();
@@ -206,6 +207,12 @@ namespace Cinema_Client.Controllers
                 (x => x.DATE == YearMonthDay &&
                 x.TIME == HourMinutesSeconds &&
                 x.ID_HALL == Hallid).Select(x => x.ID_PROGRAM).FirstOrDefault();
+
+            if (Session["mTitle"]==null)
+            {
+                var idMovie = db.PROGRAM.Where(x => x.ID_PROGRAM == idProgram).Select(x => x.ID_MOVIE).FirstOrDefault();
+                Session["mTitle"] = db.MOVIES.Where(x => x.ID_MOVIE == idMovie).Select(x => x.TITLE).FirstOrDefault();
+            }
 
             //lista zajetych krzesel
             var bookedSeat = db.RESERVATIONS_DETAILS.Include(r => r.RESERVATIONS).Include(r => r.RESERVATIONS.PROGRAM).Where(r => r.RESERVATIONS.ID_PROGRAM == idProgram).Select(r=> r.ID_SEAT).ToList();

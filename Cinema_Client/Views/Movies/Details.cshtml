@@ -73,4 +73,8 @@
 </div>
 <p>
     <br> @Html.ActionLink("Powrót do listy filmów", "Index")
+    @if (Session["USER_LOGIN"] != null)
+    {
+        @Html.ActionLink("Zarezerwuj", "Create", "Reservation", new { movieId = Model.ID_MOVIE }, new { @class = "btn btn-default", @style = "float:right" })
+    }
 </p>

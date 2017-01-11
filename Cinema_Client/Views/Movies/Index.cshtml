@@ -92,7 +92,10 @@
             </td>
             <td>
                 @Html.ActionLink("Więcej", "Details", new { id = item.ID_MOVIE }, new { @class = "btn btn-default", @style= "margin-top: 3px; margin-bottom: 7px" })
-                @Html.ActionLink("Zarezerwuj", "Create", "Reservation", new { movieId = item.ID_MOVIE }, new { @class = "btn btn-default"})
+                @if (Session["USER_LOGIN"] != null)
+                {
+                    @Html.ActionLink("Zarezerwuj", "Create", "Reservation", new { movieId = item.ID_MOVIE }, new { @class = "btn btn-default" })
+                }
             </td>
         </tr>
     }

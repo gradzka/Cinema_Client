@@ -6,17 +6,15 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Zarządzaj rezerwacjami", "Index", "Reservation", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink("Zarządzaj rezerwacjami", "Index", "Reservation")
             </li>
 
-                <!--Html.ActionLink("Witaj, " + @Session["NAME"].ToString() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })-->            
-
             <li>
-                <a href="#">Witaj, @Session["NAME"].ToString()!</a>
-                <ul>
-                    <li style="height:35px;"><a href="#" style="margin-right:10px;">Edytuj Profil</a></li>
-                    <li style="height:35px"><a href="#" style="margin-right:10px; vertical-align:central">Usuń konto</a></li>
-                    <li style="height:35px"><a href="#" style="margin-right:10px; vertical-align:central">Zmień hasło</a></li>
+                <a>Witaj, @Session["NAME"].ToString()!</a>
+                <ul class="nav">
+                    <li>@Html.ActionLink("Edytuj Profil", "Edit", "Account")</li>
+                    <li>@Html.ActionLink("Usuń konto", "Delete", "Account")</li>
+                    <li>@Html.ActionLink("Zmień hasło", "ChangePass", "Account")</li>
                 </ul>
             </li> 
 

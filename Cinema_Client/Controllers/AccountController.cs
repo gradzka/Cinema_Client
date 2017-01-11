@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -57,7 +59,7 @@ namespace Cinema_Client.Controllers
                             ViewBag.Message = "Pomyślnie utworzono konto dla użytkownika: " + account.USER_LOGIN;
                         }
                     }
-                } 
+                }
 
             }
             return View();
@@ -126,7 +128,53 @@ namespace Cinema_Client.Controllers
             {
                 return RedirectToAction("", "Home");
             }
-            
+
+        }
+
+        // GET: temp/Edit/5
+        public ActionResult Edit()
+        {
+            if (Session["USER_LOGIN"] != null)
+            {
+                using (CinemaEntities db = new CinemaEntities())
+                {
+                    USERS uSERS = db.USERS.Find(Session["USER_LOGIN"]);
+                    if (uSERS == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(uSERS);
+                }
+            }
+            else
+            {
+                return RedirectToAction("", "Home");
+            }
+        }
+
+        // POST: temp/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "USER_LOGIN,PASSWORD,NAME,SURNAME,E_MAIL,TELEPHONE,LAST_LOGIN")] USERS uSERS)
+        {
+            if (uSERS.NAME != "" && uSERS.SURNAME != "" && uSERS.E_MAIL != "" && uSERS.TELEPHONE != "")
+            {
+                using (CinemaEntities db = new CinemaEntities())
+                {
+                    string login = Session["USER_LOGIN"].ToString();
+                    var findUser = db.USERS.Where(u => u.USER_LOGIN == login).FirstOrDefault();
+                    findUser.NAME = uSERS.NAME;
+                    findUser.SURNAME = uSERS.SURNAME;
+                    findUser.E_MAIL = uSERS.E_MAIL;
+                    findUser.TELEPHONE = uSERS.TELEPHONE;
+                    db.Entry(findUser).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return View(uSERS);
         }
 
     }

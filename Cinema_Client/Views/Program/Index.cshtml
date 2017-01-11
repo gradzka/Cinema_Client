@@ -53,10 +53,13 @@
             <td>
                 
                 
-                @using (Html.BeginForm("Next", "Reservation"))
+                @if (Session["USER_LOGIN"] != null)
                 {
-                    @Html.Hidden("DateTimeHall", item.DATE.ToShortDateString() + " " + item.TIME.ToString() + " Sala: " + item.ID_HALL.ToString())
-                    <input type="submit" value="Zarezerwuj" class="btn btn-default"/>
+                    using (Html.BeginForm("Next", "Reservation"))
+                    {
+                        @Html.Hidden("DateTimeHall", item.DATE.ToShortDateString() + " " + item.TIME.ToString() + " Sala: " + item.ID_HALL.ToString())
+                        <input type="submit" value="Zarezerwuj" class="btn btn-default"/>
+                    }
                 }
 </td>
         </tr>

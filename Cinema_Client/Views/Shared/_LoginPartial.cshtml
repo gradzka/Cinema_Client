@@ -8,10 +8,21 @@
             <li>
                 @Html.ActionLink("Zarządzaj rezerwacjami", "Index", "Reservation", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>
+
+                <!--Html.ActionLink("Witaj, " + @Session["NAME"].ToString() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })-->            
+
             <li>
-                @Html.ActionLink("Witaj, "+ @Session["NAME"].ToString() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                <a href="#">Witaj, @Session["NAME"].ToString()!</a>
+                <ul>
+                    <li style="height:35px;"><a href="#" style="margin-right:10px;">Edytuj Profil</a></li>
+                    <li style="height:35px"><a href="#" style="margin-right:10px; vertical-align:central">Usuń konto</a></li>
+                    <li style="height:35px"><a href="#" style="margin-right:10px; vertical-align:central">Zmień hasło</a></li>
+                </ul>
+            </li> 
+
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a>
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>
         </ul>
     }
 }

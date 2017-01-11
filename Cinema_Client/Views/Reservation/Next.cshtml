@@ -154,6 +154,8 @@
         </table>
 
         <p align="right">
-            <input type="submit" id="NextButton" title="Aby przejść dalej, wybierz co najmniej jedno miejsce" value="Dalej" formaction='@Url.Action("SummarySeats", "Reservation")' class="btn btn-default" disabled="disabled" style="filter: alpha(opacity=30)" />
-        </p>
+            <span class="tool-tip" data-toggle="tooltip" data-placement="top" title="Aby przejść dalej, wybierz co najmniej jedno miejsce">
+                <input type="submit" id="NextButton" value="Dalej" formaction='@Url.Action("SummarySeats", "Reservation")' class="btn btn-default" disabled="disabled" style="filter: alpha(opacity=30)" />
+            </span>
+</p>
 }

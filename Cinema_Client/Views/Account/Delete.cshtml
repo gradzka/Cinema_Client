@@ -1,0 +1,19 @@
+﻿@model Cinema_Client.USERS
+
+@{
+    ViewBag.Title = "Usuwanie konta";
+}
+
+<h2><MyTitle>Usuwanie konta</MyTitle></h2>
+
+<h3>Czy na pewno chcesz usunąć swoje konto?</h3>
+<div>
+    @using (Html.BeginForm()) {
+        <div class="form-actions no-color">
+            <input type="submit" value="Usuń konto" class="btn btn-default" style="margin-left:360px; margin-top:10px" />
+            <br />
+            <br />
+            @Html.ActionLink("Powrót do strony głównej", "Index", "Home")
+        </div>
+    }
+</div>

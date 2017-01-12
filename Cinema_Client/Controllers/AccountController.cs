@@ -177,5 +177,43 @@ namespace Cinema_Client.Controllers
             return View(uSERS);
         }
 
+        // GET: temp/Delete/5
+        public ActionResult Delete()
+        {
+            if (Session["USER_LOGIN"] != null)
+            {
+                using (CinemaEntities db = new CinemaEntities())
+                {
+                return View();
+                }
+            }
+            else
+            {
+                return RedirectToAction("", "Home");
+            }
+        }
+
+        // POST: temp/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id)
+        {
+            if (Session["USER_LOGIN"] != null)
+            {
+                using (CinemaEntities db = new CinemaEntities())
+                {
+                    USERS uSERS = db.USERS.Find(Session["USER_LOGIN"]);
+                    if (uSERS == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    db.USERS.Remove(uSERS);
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("", "Home");
+        }
+
     }
 }

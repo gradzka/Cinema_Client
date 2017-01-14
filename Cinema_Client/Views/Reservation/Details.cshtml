@@ -22,24 +22,37 @@
                         <th>
                             BILET
                         </th>
-                        <th></th>
                     </tr>
-
-                    @foreach (var item in ViewBag.RDetails)
+                    @foreach (KeyValuePair<string, TICKETS> item in (Dictionary<string, TICKETS>)ViewBag.RDetails)
                     {
                         <tr>
                             <td>
-                                @item.seat
+                                @item.Key
                             </td>
                             <td>
-                                @item.ticket.TYPE
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edytuj", "Edit", new { id = Model.ID_RESERVATION })
+                                @item.Value.TYPE
                             </td>
                         </tr>
                     }
-                    </table>
+                </table>
+                @using (Html.BeginForm("Next", "Reservation"))
+                {
+                    //Wysłanie 1) daty, godziny, sali, 3) siedzenia, rodzaju biletu
+                    @Html.Hidden("DateTimeHall", Model.PROGRAM.DATE.ToShortDateString() + " " + Model.PROGRAM.TIME.ToString() + " Sala: " + Model.PROGRAM.ID_HALL.ToString())
+                    @Html.Hidden("idres", Model.ID_RESERVATION)
+                    Dictionary<string, TICKETS> seatTicket = ViewBag.RDetails;
+                    string key;
+                    string value;
+                    foreach (var elem in seatTicket)
+                    {
+                        key = "seatTicket." + elem.Key;
+                        value = elem.Value.TYPE;
+                        @Html.Hidden(key, value)
+                    }
+                    <input type="submit" value="Edytuj" class="btn btn-default" style="margin-right:45px" />
+                }
+
+                <!--input type="submit" value="Edytuj" formaction='@Url.Action("Edytuj", "Edit")' class="btn btn-default" style="margin-left:400px; margin-top:16px" /--> 
 </td>
         </tr>
         <tr>

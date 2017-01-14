@@ -58,7 +58,7 @@
           <Key>
             <PropertyRef Name="ID_RESERVATION" />
           </Key>
-          <Property Name="ID_RESERVATION" Type="smallint" Nullable="false" />
+          <Property Name="ID_RESERVATION" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ID_PROGRAM" Type="smallint" Nullable="false" />
           <Property Name="USER_LOGIN" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -306,7 +306,7 @@
           <Key>
             <PropertyRef Name="ID_RESERVATION" />
           </Key>
-          <Property Name="ID_RESERVATION" Type="Int16" Nullable="false" />
+          <Property Name="ID_RESERVATION" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_PROGRAM" Type="Int16" Nullable="false" />
           <Property Name="USER_LOGIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="PROGRAM" Relationship="Self.FK_RESERVATIONS_PROGRAM" FromRole="RESERVATIONS" ToRole="PROGRAM" />

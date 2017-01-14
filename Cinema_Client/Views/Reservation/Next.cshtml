@@ -45,6 +45,25 @@
             }
         }
     }
+
+    var seatTicket = @Html.Raw(Json.Encode(@ViewBag.selectedSeatTicket));
+    //wywolanie odznaczenia siedzen zajetych
+    function selectedSeats()
+    {
+        for (var key of Object.keys(seatTicket))
+        {
+            document.getElementById(key).checked = true; //checkbox
+            document.getElementById(key).value = document.getElementById(key).value + " " + seatTicket[key];
+            numberOfSelectedSeats += 1;
+
+        }
+
+        if (numberOfSelectedSeats > 0) {
+            document.getElementById("NextButton").disabled = false;
+            document.getElementById("NextButton").title = "";
+        }
+    }
+
 </script>
 
 <h2><MyTitle>@Session["mTitle"]</MyTitle></h2>
@@ -59,6 +78,7 @@
             <td colspan="@ViewBag.screen" style="background-color:#000000; width:40px" align="center" class="noBorder"> EKRAN </td>
             <td colspan=3 class="noBorder" style="width:40px"></td>
         </tr>
+
 
         @for (char i = 'A'; i <= @ViewBag.lastletter; i++)
         {
@@ -81,7 +101,14 @@
                                     }
                                     else
                                     {
-                                        <label id="@labelid" for="@i@j" onclick="ticketschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle">@j</label>
+                                        if (ViewBag.selectedSeatTicket.ContainsKey(@i + @j.ToString()) == true)
+                                        {
+                                            <label id="@labelid" for="@i@j" onclick="ticketschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle" title="@ViewBag.selectedSeatTicket[@i + @j.ToString()]">@j</label>
+                                        }
+                                        else
+                                        {
+                                            <label id="@labelid" for="@i@j" onclick="ticketschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle">@j</label>
+                                        }
                                     }
 
                                 </div>
@@ -96,11 +123,19 @@
                                     }
                                     else
                                     {
+                                        if (ViewBag.selectedSeatTicket.ContainsKey(@i + @j.ToString()) == true)
+                                        {
+                                            <label id="@labelid" for="@i@j" onclick="ticketschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle" title="@ViewBag.selectedSeatTicket[@i + @j.ToString()]">@j</label>
+                                        }
+                                        else
+                                        {
+                                            <label id="@labelid" for="@i@j" onclick="ticketschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle">@j</label>
+                                        }
 
-                                        <label id="@labelid" for="@i@j" onclick="ticketschange('dl'+'@i@j' , document.getElementById('@i@j'))" style="vertical-align:middle">@j</label>
                                     }
                                 </div>
                             }
+
                                 }
 
                             @Html.DropDownList("ticketstype", (SelectList)ViewBag.ticketstype, "Wybierz rodziaj biletu:" , htmlAttributes: new { id = "dl" + @i + "" + @j, @class = "dropdown-menu", @style = "display:none", @onchange = "selectedticket(this)" })
@@ -111,7 +146,8 @@
             </tr>
         }
     </table>
-    
+
+   <!--LEGENDA--> 
         <table style="width:unset" align="center">
             <tr>
                 <td colspan=7 align="center" style="height:50px; vertical-align:middle" class="noBorder"><b>Legenda</b></td>
@@ -159,3 +195,5 @@
             </span>
 </p>
 }
+<script type="text/javascript">selectedSeats()</script>
+<!--script type="text/javascript">selectedSeats()<script--> 

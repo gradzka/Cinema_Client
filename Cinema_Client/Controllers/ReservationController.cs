@@ -66,18 +66,15 @@ namespace Cinema_Client.Controllers
                     return HttpNotFound();
                 }
                 var RDetails = db.RESERVATIONS_DETAILS.Where(r => r.ID_RESERVATION == id).ToList();
-                string seat;
-                List<Detail> details = new List<Detail>();
-                Detail one_detail;
+
+                Dictionary<string, TICKETS> seat_ticket = new Dictionary<string, TICKETS>();
 
                 foreach (var item in RDetails)
                 {
-                    seat = item.ID_SEAT;
-                    one_detail = new Detail(seat, item.TICKETS);
-                    details.Add(one_detail);
+                    seat_ticket.Add(item.ID_SEAT, item.TICKETS);
                 }
 
-                ViewBag.RDetails = details;
+                ViewBag.RDetails = seat_ticket;
 
                 return View(rESERVATIONS);
             }
@@ -139,7 +136,7 @@ namespace Cinema_Client.Controllers
 
         [HttpPost]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult Next(string DateTimeHall)
+        public ActionResult Next(string DateTimeHall,short? idres, Dictionary<string, string> seatTicket)
         {
             if (Session["USER_LOGIN"] != null)
             {
@@ -205,6 +202,22 @@ namespace Cinema_Client.Controllers
 
                 //lista zajetych krzesel
                 var bookedSeat = db.RESERVATIONS_DETAILS.Include(r => r.RESERVATIONS).Include(r => r.RESERVATIONS.PROGRAM).Where(r => r.RESERVATIONS.ID_PROGRAM == idProgram).Select(r => r.ID_SEAT).ToList();
+                
+
+                ViewBag.idReservation = -1; //uzytkownik dokonuje rezerwacji, a nie modyfikacji rezerwacji
+                ViewBag.selectedSeatTicket = new Dictionary<string, string>();
+                //miejsca wybrane przez uzytkownika
+                if (seatTicket != null && idres> -1)
+                {
+                    ViewBag.idReservation = idres;
+                    ViewBag.selectedSeatTicket = seatTicket;
+                    foreach (var item in seatTicket)
+                    {
+                        bookedSeat.Remove(item.Key); //usuniecie z bookedSeat siedzen zajetych przez uzytkownika, ktore moze chciec edytowac
+                    }
+                    
+                    
+                }
                 ViewBag.bookedSeat = bookedSeat;
                 return View();
             }
@@ -267,6 +280,8 @@ namespace Cinema_Client.Controllers
                     (x => x.DATE == YearMonthDay &&
                     x.TIME == HourMinutesSeconds &&
                     x.ID_HALL == Hallid).Select(x => x.ID_PROGRAM).FirstOrDefault();
+
+                //rESERVATIONS.ID_RESERVATION=
 
                 string userLogin = Session["USER_LOGIN"].ToString();
 

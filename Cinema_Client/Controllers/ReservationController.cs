@@ -11,18 +11,6 @@ using System.Web.Caching;
 
 namespace Cinema_Client.Controllers
 {
-    public class Detail
-    {
-        public string seat;
-        public TICKETS ticket;
-
-        public Detail(string seat, TICKETS ticket)
-        {
-            this.seat = seat;
-            this.ticket = ticket;
-        }
-    }
-
     public class ReservationController : Controller
     {
         private CinemaEntities db = new CinemaEntities();
@@ -55,7 +43,6 @@ namespace Cinema_Client.Controllers
         {
             if (Session["USER_LOGIN"] != null)
             {
-
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -216,7 +203,6 @@ namespace Cinema_Client.Controllers
                         bookedSeat.Remove(item.Key); //usuniecie z bookedSeat siedzen zajetych przez uzytkownika, ktore moze chciec edytowac
                     }
                     
-                    
                 }
                 ViewBag.bookedSeat = bookedSeat;
                 return View();
@@ -340,45 +326,12 @@ namespace Cinema_Client.Controllers
                     }
 
                 }
-
+                Session["mTitle"] = null;
+                Session["DateTimeHall"] = null;
+                Session["seatTicket"] = null;
                 db.SaveChanges();
             }
             return RedirectToAction("Index");
-        }
-
-        // GET: Reservation/Edit/5
-        public ActionResult Edit(short? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RESERVATIONS rESERVATIONS = db.RESERVATIONS.Find(id);
-            if (rESERVATIONS == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ID_PROGRAM = new SelectList(db.PROGRAM, "ID_PROGRAM", "ID_HALL", rESERVATIONS.ID_PROGRAM);
-            ViewBag.USER_LOGIN = new SelectList(db.USERS, "USER_LOGIN", "PASSWORD", rESERVATIONS.USER_LOGIN);
-            return View(rESERVATIONS);
-        }
-
-        // POST: Reservation/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_RESERVATION,ID_PROGRAM,USER_LOGIN")] RESERVATIONS rESERVATIONS)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(rESERVATIONS).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.ID_PROGRAM = new SelectList(db.PROGRAM, "ID_PROGRAM", "ID_HALL", rESERVATIONS.ID_PROGRAM);
-            ViewBag.USER_LOGIN = new SelectList(db.USERS, "USER_LOGIN", "PASSWORD", rESERVATIONS.USER_LOGIN);
-            return View(rESERVATIONS);
         }
 
         // GET: Reservation/Delete/5
@@ -424,6 +377,7 @@ namespace Cinema_Client.Controllers
                 db.RESERVATIONS.Remove(rESERVATIONS);
                 db.SaveChanges();
             }
+            Session["seatTicket"] = null;
             return RedirectToAction("Index");
         }
 

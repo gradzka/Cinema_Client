@@ -7,7 +7,6 @@ using System.Web.Mvc;
 
 namespace Cinema_Client.Controllers
 {
-
     public class HomeController : Controller
     {
         private CinemaEntities db = new CinemaEntities();

@@ -278,7 +278,6 @@
     <Content Include="Views\Reservation\Create.cshtml" />
     <Content Include="Views\Reservation\Delete.cshtml" />
     <Content Include="Views\Reservation\Details.cshtml" />
-    <Content Include="Views\Reservation\Edit.cshtml" />
     <Content Include="Views\Reservation\Index.cshtml" />
     <Content Include="Views\Reservation\Next.cshtml" />
     <Content Include="Views\Reservation\SummarySeats.cshtml" />

@@ -12,14 +12,6 @@ namespace Cinema_Client.Controllers
 {
     public class AccountController : Controller
     {
-        //GET:Account
-        public ActionResult Index()
-        {
-            using (CinemaEntities db = new CinemaEntities())
-            {
-                return View(db.USERS.ToList());
-            }
-        }
         public ActionResult Register()
         {
             return View();
@@ -83,7 +75,6 @@ namespace Cinema_Client.Controllers
         {
             using (CinemaEntities db = new CinemaEntities())
             {
-
                 byte[] client_password = Encoding.Default.GetBytes(user.PASSWORD);
 
                 //utworzenie skrotu od pobranego hasla (SHA_1)
@@ -101,7 +92,10 @@ namespace Cinema_Client.Controllers
                 if (usr != null)
                 {
                     Session["USER_LOGIN"] = usr.USER_LOGIN.ToString();
-                    Session["NAME"] = usr.NAME.ToString();
+                    Session["USER_NAME"] = usr.NAME.ToString();
+                    usr.LAST_LOGIN =DateTime.Now;
+                    db.Entry(usr).State = EntityState.Modified;
+                    db.SaveChanges();
                     return RedirectToAction("", "Home");
                 }
                 else
@@ -121,7 +115,7 @@ namespace Cinema_Client.Controllers
             if (Session["USER_LOGIN"] != null)
             {
                 Session["USER_LOGIN"] = null;
-                Session["NAME"] = null;
+                Session["USER_NAME"] = null;
                 return RedirectToAction("Index", "Home");
             }
             else

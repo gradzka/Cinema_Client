@@ -153,15 +153,7 @@ namespace Cinema_Client.Controllers
                 ViewBag.screen = columns_number - 4;
                 ViewBag.lastletter = last_letter[0];
 
-                //Bilety
-                List<string> tickets = new List<string>();
-                foreach (var elem in db.TICKETS.ToList())
-                {
-                    tickets.Add(elem.TYPE);
-                }
-
-                ViewBag.ticketstype = new SelectList(tickets);
-
+                
                 /*
                  * miejsca zajete: PROGRAM(ID_PROGRAM, ID_HALL)
                  * RESERVATIONS(ID_PROGRAM, ID_RESERVATION)
@@ -181,17 +173,29 @@ namespace Cinema_Client.Controllers
                     x.TIME == HourMinutesSeconds &&
                     x.ID_HALL == Hallid).Select(x => x.ID_PROGRAM).FirstOrDefault();
 
+                var idMovie = db.PROGRAM.Where(x => x.ID_PROGRAM == idProgram).Select(x => x.ID_MOVIE).FirstOrDefault();
+
                 if (Session["mTitle"] == null)
-                {
-                    var idMovie = db.PROGRAM.Where(x => x.ID_PROGRAM == idProgram).Select(x => x.ID_MOVIE).FirstOrDefault();
+                {              
                     Session["mTitle"] = db.MOVIES.Where(x => x.ID_MOVIE == idMovie).Select(x => x.TITLE).FirstOrDefault();
                 }
+
+                byte movieRating = db.MOVIES.Where(x => x.ID_MOVIE == idMovie).Select(x => x.RATING).FirstOrDefault();
+                //Bilety
+                List<string> tickets = new List<string>();
+                foreach (var elem in db.TICKETS.ToList())
+                {
+                    if (movieRating > 7 && elem.TYPE == "Dziecko") continue;
+                    tickets.Add(elem.TYPE);
+                }
+
+                ViewBag.ticketstype = new SelectList(tickets);
 
                 //lista zajetych krzesel
                 var bookedSeat = db.RESERVATIONS_DETAILS.Include(r => r.RESERVATIONS).Include(r => r.RESERVATIONS.PROGRAM).Where(r => r.RESERVATIONS.ID_PROGRAM == idProgram).Select(r => r.ID_SEAT).ToList();
                 
 
-                ViewBag.idReservation = -1; //uzytkownik dokonuje rezerwacji, a nie modyfikacji rezerwacji
+                ViewBag.idReservation = (short)-1; //uzytkownik dokonuje rezerwacji, a nie modyfikacji rezerwacji
                 ViewBag.selectedSeatTicket = new Dictionary<string, string>();
                 //miejsca wybrane przez uzytkownika
                 if (seatTicket != null && idres> -1)
@@ -251,7 +255,7 @@ namespace Cinema_Client.Controllers
         {
             if (Session["USER_LOGIN"] != null)
             {
-                if (id == null) //uzytkownik dokonuje nowej rezerwacji
+                if (id == -1) //uzytkownik dokonuje nowej rezerwacji
                 {
                     RESERVATIONS rESERVATIONS = new RESERVATIONS();
                     string dateTimeHall = Session["DateTimeHall"].ToString();

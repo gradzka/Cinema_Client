@@ -46,7 +46,7 @@
           <Key>
             <PropertyRef Name="ID_PROGRAM" />
           </Key>
-          <Property Name="ID_PROGRAM" Type="smallint" Nullable="false" />
+          <Property Name="ID_PROGRAM" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="DATE" Type="date" Nullable="false" />
           <Property Name="TIME" Type="time" Precision="0" Nullable="false" />
           <Property Name="ID_HALL" Type="varchar" MaxLength="4" Nullable="false" />
@@ -94,7 +94,7 @@
           <Key>
             <PropertyRef Name="ID_TICKET" />
           </Key>
-          <Property Name="ID_TICKET" Type="tinyint" Nullable="false" />
+          <Property Name="ID_TICKET" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TYPE" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PRICE_2D" Type="smallmoney" Nullable="false" />
           <Property Name="PRICE_3D" Type="smallmoney" Nullable="false" />
@@ -291,7 +291,7 @@
           <Key>
             <PropertyRef Name="ID_PROGRAM" />
           </Key>
-          <Property Name="ID_PROGRAM" Type="Int16" Nullable="false" />
+          <Property Name="ID_PROGRAM" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DATE" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="TIME" Type="Time" Nullable="false" Precision="0" />
           <Property Name="ID_HALL" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
@@ -348,7 +348,7 @@
           <Key>
             <PropertyRef Name="ID_TICKET" />
           </Key>
-          <Property Name="ID_TICKET" Type="Byte" Nullable="false" />
+          <Property Name="ID_TICKET" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PRICE_2D" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
           <Property Name="PRICE_3D" Type="Decimal" Precision="10" Scale="4" Nullable="false" />

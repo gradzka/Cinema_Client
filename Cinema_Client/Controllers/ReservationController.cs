@@ -28,7 +28,7 @@ namespace Cinema_Client.Controllers
             if (Session["USER_LOGIN"] != null)
             {
                 string login = Session["USER_LOGIN"].ToString();
-                var rESERVATIONS = db.RESERVATIONS.Include(r => r.PROGRAM).Include(r => r.USERS).Include(r => r.PROGRAM.MOVIES).Where(r => r.USER_LOGIN == login);
+                var rESERVATIONS = db.RESERVATIONS.Include(r => r.PROGRAM).Include(r => r.USERS).Include(r => r.PROGRAM.MOVIES).Where(r => r.USER_LOGIN == login).OrderBy(x => x.PROGRAM.DATE).ThenBy(x => x.PROGRAM.TIME);
                 return View(rESERVATIONS.ToList());
             }
             else
@@ -79,7 +79,7 @@ namespace Cinema_Client.Controllers
                 if (movieId != null)
                 {
                     List<string> dataArray = new List<string>();
-                    foreach (var elem in db.PROGRAM.Where(x => x.ID_MOVIE == movieId).ToList())
+                    foreach (var elem in db.PROGRAM.Where(x => x.ID_MOVIE == movieId).OrderBy(x =>x.DATE).ThenBy(x=>x.TIME).ToList())
                     {
                         dataArray.Add(elem.DATE.ToShortDateString() + " " + elem.TIME.ToString() + " Sala: " + elem.ID_HALL.ToString());
                     }

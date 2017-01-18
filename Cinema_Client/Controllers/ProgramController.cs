@@ -17,7 +17,7 @@ namespace Cinema_Client.Controllers
         // GET: Program
         public ActionResult Index()
         {
-            var pROGRAM = db.PROGRAM.Include(p => p.HALLS).Include(p => p.MOVIES);
+            var pROGRAM = db.PROGRAM.Include(p => p.HALLS).Include(p => p.MOVIES).OrderBy(x=>x.DATE).ThenBy(x=>x.TIME);
             return View(pROGRAM.ToList());
         }
 

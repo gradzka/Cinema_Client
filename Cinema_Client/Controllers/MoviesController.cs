@@ -17,7 +17,7 @@ namespace Cinema_Client.Controllers
         // GET: Movies
         public ActionResult Index()
         {
-            return View(db.MOVIES.ToList());
+            return View(db.MOVIES.ToList().OrderByDescending(x=>x.RELEASE_DATE));
         }
 
         // GET: Movies/Details/5

@@ -33,6 +33,8 @@
 
 @using (Html.BeginForm("SummaryReservation", "Reservation"))
 {
+    short id = ViewBag.idReservation;
+    @Html.Hidden("id", id)
     <input type="submit" value="Zatwierdź" onclick='@Url.Action("SummaryReservation", "Reservation")' class="btn btn-default" />
 }
 

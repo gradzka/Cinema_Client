@@ -229,8 +229,9 @@ namespace Cinema_Client.Controllers
 
         [HttpPost]
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult SummarySeats(string[] seat)
+        public ActionResult SummarySeats(string[] seat, short? id)
         {
+            ViewBag.idReservation = id;
             if (Session["USER_LOGIN"] != null)
             {
                 Dictionary<string, string> seatTicket = new Dictionary<string, string>();
@@ -260,54 +261,84 @@ namespace Cinema_Client.Controllers
         }
 
         [HttpPost]
-        public ActionResult SummaryReservation()
+        public ActionResult SummaryReservation(short? id)
         {
             if (Session["USER_LOGIN"] != null)
             {
-                RESERVATIONS rESERVATIONS = new RESERVATIONS();
-                string dateTimeHall = Session["DateTimeHall"].ToString();
-                string[] date_time_hall_Array = dateTimeHall.Split(' ');//3 -hall
-                string[] date = date_time_hall_Array[0].Split('-');
-                //year, month, day
-                DateTime YearMonthDay = new DateTime(Int32.Parse(date[0]), Int32.Parse(date[1]), Int32.Parse(date[2]));
-                //hour, minutes, seconds
-                string[] time = date_time_hall_Array[1].Split(':');
-                TimeSpan HourMinutesSeconds = new TimeSpan(Int32.Parse(time[0]), Int32.Parse(time[1]), Int32.Parse(time[2]));
-
-                string Hallid = date_time_hall_Array[3];
-                //ID_Program
-                var idProgram = db.PROGRAM.Where
-                    (x => x.DATE == YearMonthDay &&
-                    x.TIME == HourMinutesSeconds &&
-                    x.ID_HALL == Hallid).Select(x => x.ID_PROGRAM).FirstOrDefault();
-
-                //rESERVATIONS.ID_RESERVATION=
-
-                string userLogin = Session["USER_LOGIN"].ToString();
-
-
-                rESERVATIONS.ID_PROGRAM = idProgram;
-                rESERVATIONS.USER_LOGIN = userLogin;
-                db.RESERVATIONS.Add(rESERVATIONS);
-                db.SaveChanges();
-
-                //id_reser  |   id_seat     |id_ticket
-                RESERVATIONS_DETAILS rESERVATIONS_DETAILS;
-
-                var idReservation = rESERVATIONS.ID_RESERVATION;
-                Dictionary<string, string> seatTicket = (Dictionary<string, string>)Session["seatTicket"];
-
-                //pair.Value - rodzaj biletu
-                //pair.Key - miejsce
-                foreach (KeyValuePair<string, string> pair in seatTicket)
+                if (id == null) //uzytkownik dokonuje nowej rezerwacji
                 {
-                    rESERVATIONS_DETAILS = new RESERVATIONS_DETAILS();
-                    rESERVATIONS_DETAILS.ID_RESERVATION = idReservation;
-                    if (pair.Key.Contains("VIP"))
-                    { rESERVATIONS_DETAILS.ID_SEAT = pair.Key.Remove(pair.Key.Length - 4); }
-                    else { rESERVATIONS_DETAILS.ID_SEAT = pair.Key; }
-                    rESERVATIONS_DETAILS.ID_TICKET = db.TICKETS.Where(x => x.TYPE == pair.Value).Select(x => x.ID_TICKET).FirstOrDefault();
-                    db.RESERVATIONS_DETAILS.Add(rESERVATIONS_DETAILS);
+                    RESERVATIONS rESERVATIONS = new RESERVATIONS();
+                    string dateTimeHall = Session["DateTimeHall"].ToString();
+                    string[] date_time_hall_Array = dateTimeHall.Split(' ');//3 -hall
+                    string[] date = date_time_hall_Array[0].Split('-');
+                    //year, month, day
+                    DateTime YearMonthDay = new DateTime(Int32.Parse(date[0]), Int32.Parse(date[1]), Int32.Parse(date[2]));
+                    //hour, minutes, seconds
+                    string[] time = date_time_hall_Array[1].Split(':');
+                    TimeSpan HourMinutesSeconds = new TimeSpan(Int32.Parse(time[0]), Int32.Parse(time[1]), Int32.Parse(time[2]));
+
+                    string Hallid = date_time_hall_Array[3];
+                    //ID_Program
+                    var idProgram = db.PROGRAM.Where
+                        (x => x.DATE == YearMonthDay &&
+                        x.TIME == HourMinutesSeconds &&
+                        x.ID_HALL == Hallid).Select(x => x.ID_PROGRAM).FirstOrDefault();
+
+                    //rESERVATIONS.ID_RESERVATION=
+
+                    string userLogin = Session["USER_LOGIN"].ToString();
+
+
+                    rESERVATIONS.ID_PROGRAM = idProgram;
+                    rESERVATIONS.USER_LOGIN = userLogin;
+                    db.RESERVATIONS.Add(rESERVATIONS);
+                    db.SaveChanges();
+
+                    //id_reser  |   id_seat     |id_ticket
+                    RESERVATIONS_DETAILS rESERVATIONS_DETAILS;
+
+                    var idReservation = rESERVATIONS.ID_RESERVATION;
+                    Dictionary<string, string> seatTicket = (Dictionary<string, string>)Session["seatTicket"];
+
+                    //pair.Value - rodzaj biletu
+                    //pair.Key - miejsce
+                    foreach (KeyValuePair<string, string> pair in seatTicket)
+                    {
+                        rESERVATIONS_DETAILS = new RESERVATIONS_DETAILS();
+                        rESERVATIONS_DETAILS.ID_RESERVATION = idReservation;
+                        if (pair.Key.Contains("VIP"))
+                        { rESERVATIONS_DETAILS.ID_SEAT = pair.Key.Remove(pair.Key.Length - 4); }
+                        else { rESERVATIONS_DETAILS.ID_SEAT = pair.Key; }
+                        rESERVATIONS_DETAILS.ID_TICKET = db.TICKETS.Where(x => x.TYPE == pair.Value).Select(x => x.ID_TICKET).FirstOrDefault();
+                        db.RESERVATIONS_DETAILS.Add(rESERVATIONS_DETAILS);
+                    }
+                }
+                else //uzytkownik ma rezerwacje
+                {
+                    List <RESERVATIONS_DETAILS> rESERVATIONS_DETAILS_List = db.RESERVATIONS_DETAILS.Where(x=> x.ID_RESERVATION==id).ToList(); //zwraca wszystkie rezerwacje o ID==id uzytkownika
+                    Dictionary<string, string> seatTicket = (Dictionary<string, string>)Session["seatTicket"]; //siedzenia i bilety, ktore wybrał uzytkownik
+
+                    //1. Skasowanie pozycji z RESERVATIONS_DETAILS o id przeslanym w argumencie metody
+                    foreach (var item in rESERVATIONS_DETAILS_List)
+                    {
+                        db.RESERVATIONS_DETAILS.Remove(item);
+                    }
+
+                    db.SaveChanges();
+                    RESERVATIONS_DETAILS rESERVATIONS_DETAILS;
+
+                    //2. Dodanie do bazy poprawnych pozycji z listy
+                    foreach (KeyValuePair<string, string> pair in seatTicket)
+                    {
+                        rESERVATIONS_DETAILS = new RESERVATIONS_DETAILS();
+                        rESERVATIONS_DETAILS.ID_RESERVATION = id.Value;
+                        if (pair.Key.Contains("VIP"))
+                        { rESERVATIONS_DETAILS.ID_SEAT = pair.Key.Remove(pair.Key.Length - 4); }
+                        else { rESERVATIONS_DETAILS.ID_SEAT = pair.Key; }
+                        rESERVATIONS_DETAILS.ID_TICKET = db.TICKETS.Where(x => x.TYPE == pair.Value).Select(x => x.ID_TICKET).FirstOrDefault();
+                        db.RESERVATIONS_DETAILS.Add(rESERVATIONS_DETAILS);
+                    }
+
                 }
 
                 db.SaveChanges();

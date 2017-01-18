@@ -138,13 +138,13 @@
 
                                 }
 
-                            @Html.DropDownList("ticketstype", (SelectList)ViewBag.ticketstype, "Wybierz rodziaj biletu:" , htmlAttributes: new { id = "dl" + @i + "" + @j, @class = "dropdown-menu", @style = "display:none", @onchange = "selectedticket(this)" })
+                            @Html.DropDownList("ticketstype", (SelectList)ViewBag.ticketstype, "Wybierz rodziaj biletu:", htmlAttributes: new { id = "dl" + @i + "" + @j, @class = "dropdown-menu", @style = "display:none", @onchange = "selectedticket(this)" })
                         </div>
                     </td>
-                }
+                            }
                 <td align="center" style="vertical-align:middle">@i</td>
             </tr>
-        }
+                            }
     </table>
 
    <!--LEGENDA--> 
@@ -190,8 +190,13 @@
         </table>
 
         <p align="right">
-            <span class="tool-tip" data-toggle="tooltip" data-placement="top" title="Aby przejść dalej, wybierz co najmniej jedno miejsce">
-                <input type="submit" id="NextButton" value="Dalej" formaction='@Url.Action("SummarySeats", "Reservation")' class="btn btn-default" disabled="disabled" style="filter: alpha(opacity=30)" />
+            
+            @{
+              short id = ViewBag.idReservation;
+            }
+            @Html.Hidden("id", id)
+            <span class="tool-tip" data-toggle="tooltip" data-placement="top" title="Aby przejść dalej, wybierz co najmniej jedno miejsce">             
+                <input type="submit" id="NextButton" value="Dalej" formaction='@Url.Action("SummarySeats", "Reservation")' class="btn btn-default" disabled="disabled" style="filter: alpha(opacity=30)"/>
             </span>
 </p>
 }

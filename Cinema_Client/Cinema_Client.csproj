@@ -283,6 +283,7 @@
     <Content Include="Views\Reservation\SummarySeats.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Account\ChangePass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

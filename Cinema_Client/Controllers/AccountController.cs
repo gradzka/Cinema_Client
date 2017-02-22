@@ -57,12 +57,75 @@ namespace Cinema_Client.Controllers
             return View();
         }
 
+        public ActionResult ChangePass()
+        {
+            if (Session["USER_LOGIN"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("", "Home");
+            }
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePass(string[] pass)
+        {
+            if (Session["USER_LOGIN"] != null)
+            {
+                using (CinemaEntities db = new CinemaEntities())
+                {
+                    byte[] old_password = Encoding.Default.GetBytes(pass[0]);
+                    //utworzenie skrotu od pobranego hasla (SHA_1)
+                    using (var sha1 = SHA1.Create())
+                    {
+                        byte[] old_password_sha1 = sha1.ComputeHash(old_password);
+                        string s_old_password_sha1 = Encoding.Default.GetString(old_password_sha1);
+                        string user_login = Session["USER_LOGIN"].ToString();
+                        if (s_old_password_sha1 == db.USERS.Where(x=>x.USER_LOGIN== user_login).Select(x=>x.PASSWORD).FirstOrDefault().ToString())
+                        {
+                            if (pass[1] == pass[2])
+                            {
+                                //nowe hasla sa poprawne
+                                byte[] new_pass1 = Encoding.Default.GetBytes(pass[1]);
+                                byte[] new_pass1_sha1 = sha1.ComputeHash(new_pass1); //skrot sha_1 w byte
+                                string s_new_pass1_sha1 = Encoding.Default.GetString(new_pass1_sha1);
+
+                                var findUser = db.USERS.Where(u => u.USER_LOGIN == user_login).FirstOrDefault();
+                                findUser.PASSWORD = s_new_pass1_sha1;
+                                db.Entry(findUser).State = EntityState.Modified;
+                                db.SaveChanges();
+                                ModelState.AddModelError("", "Hasło zmieniono poprawnie!");
+                            }
+                            else
+                            {
+                                ModelState.AddModelError("", "Podane hasła nie zgadzają się!");
+                            }
+   
+                        } //podano niepoprawne stare haslo
+                        else
+                        {
+                            ModelState.AddModelError("", "Podane stare hasło jest nieprawidłowe!");
+                        }
+                    }
+
+                    return View();
+                }
+            }
+            else
+            {
+                return RedirectToAction("", "Home");
+            }
+        }
         //Login
         public ActionResult Login()
         {
             if (Session["USER_LOGIN"] == null)
             {
-                return View();
+               
+                    return View();
             }
             else
             {

@@ -14,7 +14,7 @@
           <Property Name="NAME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="SURNAME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="E-MAIL" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="TELEPHONE" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="TELEPHONE" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="LAST_LOGIN" Type="datetime" />
           <Property Name="LAST_LOGOUT" Type="datetime" />
         </EntityType>
@@ -108,7 +108,7 @@
           <Property Name="NAME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="SURNAME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="E-MAIL" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="TELEPHONE" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="TELEPHONE" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="LAST_LOGIN" Type="datetime" />
         </EntityType>
         <Association Name="FK_PROGRAM_HALLS">
@@ -256,7 +256,7 @@
           <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SURNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="E_MAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TELEPHONE" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TELEPHONE" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="LAST_LOGIN" Type="DateTime" Precision="3" />
           <Property Name="LAST_LOGOUT" Type="DateTime" Precision="3" />
         </EntityType>
@@ -363,7 +363,7 @@
           <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SURNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="E_MAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TELEPHONE" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TELEPHONE" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="LAST_LOGIN" Type="DateTime" Precision="3" />
           <NavigationProperty Name="RESERVATIONS" Relationship="Self.FK_RESERVATIONS_USERS" FromRole="USERS" ToRole="RESERVATIONS" />
         </EntityType>
